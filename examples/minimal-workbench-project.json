@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "name": "Minimal Koubo Workbench Project",
+    "createdAt": "2026-09-02T00:00:00.000Z",
+    "updatedAt": "2026-09-02T00:00:00.000Z",
+    "fps": 30
+  },
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "aspect": "16:9"
+  },
+  "script": [
+    {
+      "id": "sent-1",
+      "text": "先写文字稿，再生成配音和逐字时间戳。",
+      "startSec": 0,
+      "endSec": 3.2,
+      "chars": [
+        { "ch": "先", "t": 0, "e": 0.18 },
+        { "ch": "写", "t": 0.18, "e": 0.36 },
+        { "ch": "文", "t": 0.36, "e": 0.54 }
+      ]
+    }
+  ],
+  "shots": [
+    {
+      "id": "shot-1",
+      "title": "工作流开场",
+      "sentenceIds": ["sent-1"],
+      "startSec": 0,
+      "durationSec": 3.2,
+      "lead": 0,
+      "tail": 0,
+      "background": "浅色工作台背景",
+      "backgroundStyle": {
+        "type": "lightGrid",
+        "color": "#f7f9fb",
+        "imageUrl": ""
+      },
+      "cameraPath": [
+        { "t": 0, "scale": 1 },
+        { "t": 3.2, "scale": 1.04, "x": -18 }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": "component-1",
+      "slug": "impact-open-title",
+      "shotId": "shot-1",
+      "startSec": 0.2,
+      "durationSec": 2.7,
+      "x": 300,
+      "y": 210,
+      "w": 980,
+      "h": 330,
+      "z": 2,
+      "props": {
+        "title": "文字稿 -> 配音 -> 逐字 JSON",
+        "text": "先定声音，再定画面",
+        "accent": "#2364aa",
+        "keyword": "逐字 JSON",
+        "keywordColor": "#d9480f",
+        "textColor": "#111827",
+        "background": "transparent",
+        "fontSize": 20
+      },
+      "enter": 0.45,
+      "hold": 1.93,
+      "exit": 0.32,
+      "sfxEnabled": true,
+      "sfxCues": [
+        {
+          "id": "component-1-cue-1",
+          "componentId": "component-1",
+          "t": 0.35,
+          "assetId": "impact-impact-deep-whoosh",
+          "volume": 0.25,
+          "clip": 0.8,
+          "note": "标题入场"
+        }
+      ]
+    }
+  ],
+  "voice": {
+    "src": "",
+    "durationSec": 3.2,
+    "timestampMode": "imported",
+    "notes": "Put your local voiceover under public/media/ and set voice.src to /media/your-file.mp3."
+  },
+  "media": {
+    "sources": [],
+    "tracks": []
+  },
+  "subtitles": {
+    "enabled": true,
+    "position": "bottom",
+    "shape": "edgeFade",
+    "textColor": "#ffffff",
+    "keywordColor": "#ffd43b",
+    "background": "#111827",
+    "keywords": "文字稿,配音,逐字 JSON",
+    "fontSize": 44
+  },
+  "assets": {
+    "sfxRoot": "/sfx"
+  },
+  "sfx": {
+    "enabled": true,
+    "masterVolume": 0.72
+  }
+}
