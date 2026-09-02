@@ -20,6 +20,8 @@ If a request touches both, finish the workbench/tooling change first, then gener
 - The editor stage must represent the final canvas. Internal layout is always `1920x1080`; the browser only scales the stage visually.
 - Do not make users rely on a separate export preview to discover wrapping, overlap, or layout shifts.
 - Components should default to transparent backgrounds unless a component's purpose requires a visible surface.
+- Component text defaults to `40px` on the `1920x1080` canvas; `20px` is reserved for small notes, tags, and inspector-scale UI.
+- Resizing a component from the stage handle should scale its internal visual layers, including title text, body text, list items, lines, and marks when supported.
 - Prefer flexible component props over hard-coded visuals. Large compound components should evolve toward grouped layers: group-level drag/resize, child-level text/style/offset editing.
 - For list components, keep title and item styling independent. Do not couple title font/position changes to item font/position changes.
 - Media tracks must be editable like components: selectable from stage or timeline, draggable, resizable, shape-configurable, deletable, and exportable.

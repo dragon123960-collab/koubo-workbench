@@ -43,6 +43,7 @@ const STAGE_W = 1920;
 const STAGE_H = 1080;
 const MIN_COMPONENT_SIZE = 120;
 const MIN_MEDIA_SIZE = 80;
+const DEFAULT_COMPONENT_FONT_SIZE = 40;
 
 type DragState =
   | { mode: 'move'; kind: 'component' | 'media'; id: string; dx: number; dy: number }
@@ -1417,7 +1418,7 @@ function StageComponent({
         onMoveStart(event);
       }}
     >
-      <MotionPreview component={component} definition={definition} progress={progress} enter={enter} local={local} />
+      <MotionPreview component={component} definition={definition} progress={progress} enter={enter} local={local} visualScale={componentVisualScale(component, definition)} />
       {selected && !readOnly ? (
         <button
           type="button"
@@ -1509,7 +1510,7 @@ function MediaLayer({
   );
 }
 
-function MotionPreview({ component, definition, progress, enter, local }: { component: ComponentInstance; definition?: ComponentDefinition; progress: number; enter: number; local: number }) {
+function MotionPreview({ component, definition, progress, enter, local, visualScale }: { component: ComponentInstance; definition?: ComponentDefinition; progress: number; enter: number; local: number; visualScale: number }) {
   const category = definition?.category ?? '字幕花字';
   const title = String(component.props.title ?? definition?.title ?? component.slug);
   const text = String(component.props.text ?? '');
@@ -1517,10 +1518,10 @@ function MotionPreview({ component, definition, progress, enter, local }: { comp
   const keyword = String(component.props.keyword ?? '');
   const keywordColor = String(component.props.keywordColor ?? component.props.accent ?? '#d9480f');
   const assetUrl = String(component.props.assetUrl ?? '');
-  const fontSize = Number(component.props.fontSize ?? 20);
+  const fontSize = scaleFont(Number(component.props.fontSize ?? DEFAULT_COMPONENT_FONT_SIZE), visualScale);
 
-  if (component.slug === 'static-text-block') return <StaticTextPreview component={component} fontSize={fontSize} />;
-  if (component.slug === 'typewriter-reveal') return <TypewriterPreview component={component} title={title} text={text} progress={progress} fontSize={fontSize} assetUrl={assetUrl} />;
+  if (component.slug === 'static-text-block') return <StaticTextPreview component={component} fontSize={fontSize} visualScale={visualScale} />;
+  if (component.slug === 'typewriter-reveal') return <TypewriterPreview component={component} title={title} text={text} progress={progress} fontSize={fontSize} visualScale={visualScale} assetUrl={assetUrl} />;
   if (component.slug === 'highlighter-sweep') return <HighlighterPreview title={title} text={text} progress={progress} fontSize={fontSize} width={Number(component.props.highlightWidth ?? 70)} />;
   if (component.slug === 'hand-drawn-ellipse') return <EllipsePreview title={title} text={text} progress={progress} fontSize={fontSize} ellipseWidth={Number(component.props.ellipseWidth ?? 76)} ellipseHeight={Number(component.props.ellipseHeight ?? 42)} />;
   if (component.slug === 'ink-underline') return <InkUnderlinePreview title={title} text={text} progress={progress} fontSize={fontSize} width={Number(component.props.underlineWidth ?? 68)} />;
@@ -1532,8 +1533,8 @@ function MotionPreview({ component, definition, progress, enter, local }: { comp
         title={title}
         items={itemsFromProps(component.props, text)}
         progress={progress}
-        titleFontSize={Number(component.props.titleFontSize ?? fontSize)}
-        itemFontSize={Number(component.props.itemFontSize ?? fontSize)}
+        titleFontSize={scaleFont(Number(component.props.titleFontSize ?? component.props.fontSize ?? DEFAULT_COMPONENT_FONT_SIZE), visualScale)}
+        itemFontSize={scaleFont(Number(component.props.itemFontSize ?? component.props.fontSize ?? DEFAULT_COMPONENT_FONT_SIZE), visualScale)}
         itemBackground={String(component.props.itemBackground ?? 'transparent')}
         itemTextColor={String(component.props.itemTextColor ?? component.props.textColor ?? '#111827')}
         titleOffsetX={Number(component.props.titleOffsetX ?? 0)}
@@ -1550,12 +1551,12 @@ function MotionPreview({ component, definition, progress, enter, local }: { comp
   if (category === '转场结构') return <TransitionPreview title={title} progress={progress} />;
   if (category === '人物互动') return <HostPreview title={title} text={text} progress={progress} />;
   if (category === '运镜') return <CameraPreview title={title} text={text} local={local} assetUrl={assetUrl} />;
-  return <TextPreview component={component} title={title} text={text} enter={enter} progress={progress} keyword={keyword} keywordColor={keywordColor} fontSize={fontSize} />;
+  return <TextPreview component={component} title={title} text={text} enter={enter} progress={progress} keyword={keyword} keywordColor={keywordColor} fontSize={fontSize} visualScale={visualScale} />;
 }
 
-function TextPreview({ component, title, text, enter, progress, keyword, keywordColor, fontSize }: { component: ComponentInstance; title: string; text: string; enter: number; progress: number; keyword: string; keywordColor: string; fontSize: number }) {
+function TextPreview({ component, title, text, enter, progress, keyword, keywordColor, fontSize, visualScale }: { component: ComponentInstance; title: string; text: string; enter: number; progress: number; keyword: string; keywordColor: string; fontSize: number; visualScale: number }) {
   return (
-    <div className="motion-text" style={{ ...textLayerVars(component.props, fontSize), transform: `translateY(${(1 - enter) * 28}px) scale(${0.96 + enter * 0.04})` } as CSSProperties}>
+    <div className="motion-text" style={{ ...textLayerVars(component.props, fontSize, visualScale), transform: `translateY(${(1 - enter) * 28}px) scale(${0.96 + enter * 0.04})` } as CSSProperties}>
       <strong>{highlightText(title, keyword, keywordColor)}</strong>
       <span>{highlightText(text, keyword, keywordColor)}</span>
       <i style={{ transform: `scaleX(${clamp(progress * 1.4, 0, 1)})` }} />
@@ -1563,22 +1564,22 @@ function TextPreview({ component, title, text, enter, progress, keyword, keyword
   );
 }
 
-function StaticTextPreview({ component, fontSize }: { component: ComponentInstance; fontSize: number }) {
+function StaticTextPreview({ component, fontSize, visualScale }: { component: ComponentInstance; fontSize: number; visualScale: number }) {
   const title = String(component.props.title ?? '');
   const text = String(component.props.text ?? '');
   const align = String(component.props.align ?? 'left');
   return (
-    <div className={`motion-static-text align-${align}`} style={textLayerVars(component.props, fontSize)}>
+    <div className={`motion-static-text align-${align}`} style={textLayerVars(component.props, fontSize, visualScale)}>
       <strong>{title}</strong>
       <span>{text}</span>
     </div>
   );
 }
 
-function TypewriterPreview({ component, title, text, progress, fontSize, assetUrl }: { component: ComponentInstance; title: string; text: string; progress: number; fontSize: number; assetUrl: string }) {
+function TypewriterPreview({ component, title, text, progress, fontSize, visualScale, assetUrl }: { component: ComponentInstance; title: string; text: string; progress: number; fontSize: number; visualScale: number; assetUrl: string }) {
   const shown = text.slice(0, Math.max(1, Math.round(text.length * clamp(progress * 1.8, 0, 1))));
   return (
-    <div className={assetUrl ? 'motion-typewriter with-asset' : 'motion-typewriter'} style={textLayerVars(component.props, fontSize)}>
+    <div className={assetUrl ? 'motion-typewriter with-asset' : 'motion-typewriter'} style={textLayerVars(component.props, fontSize, visualScale)}>
       <div className="type-panel">
         <strong>{title}</strong>
         <pre>{shown}</pre>
@@ -1993,7 +1994,7 @@ function propLabel(key: string) {
 function defaultPropValue(key: string): string | number | boolean {
   if (key.toLowerCase().includes('fontfamily')) return fontFamilyOptions[0].value;
   if (key.toLowerCase().includes('offset')) return 0;
-  if (key.toLowerCase().includes('size')) return 20;
+  if (key.toLowerCase().includes('size')) return DEFAULT_COMPONENT_FONT_SIZE;
   if (key.toLowerCase().includes('width')) return 70;
   if (key.toLowerCase().includes('height')) return 42;
   if (key.toLowerCase().includes('fontweight')) return key === 'textFontWeight' ? 500 : 800;
@@ -2013,9 +2014,9 @@ const fontFamilyOptions = [
   { label: '代码等宽', value: 'JetBrains Mono, Consolas, monospace' },
 ];
 
-function textLayerVars(props: Record<string, string | number | boolean>, baseFontSize: number): CSSProperties {
-  const titleSize = Number(props.titleFontSize ?? props.fontSize ?? baseFontSize);
-  const bodySize = Number(props.textFontSize ?? props.fontSize ?? baseFontSize);
+function textLayerVars(props: Record<string, string | number | boolean>, baseFontSize: number, visualScale: number): CSSProperties {
+  const titleSize = scaleFont(Number(props.titleFontSize ?? props.fontSize ?? DEFAULT_COMPONENT_FONT_SIZE), visualScale);
+  const bodySize = scaleFont(Number(props.textFontSize ?? props.fontSize ?? DEFAULT_COMPONENT_FONT_SIZE), visualScale);
   const titleFont = String(props.titleFontFamily ?? fontFamilyOptions[0].value);
   const bodyFont = String(props.textFontFamily ?? fontFamilyOptions[0].value);
   return {
@@ -2029,6 +2030,17 @@ function textLayerVars(props: Record<string, string | number | boolean>, baseFon
     '--motion-title-color': String(props.titleColor ?? props.textColor ?? '#111827'),
     '--motion-body-color': String(props.bodyColor ?? props.textColor ?? '#111827'),
   } as CSSProperties;
+}
+
+function componentVisualScale(component: ComponentInstance, definition?: ComponentDefinition) {
+  if (!definition) return 1;
+  const scaleX = component.w / Math.max(1, definition.defaultSize.w);
+  const scaleY = component.h / Math.max(1, definition.defaultSize.h);
+  return clamp(Math.min(scaleX, scaleY), 0.25, 3);
+}
+
+function scaleFont(value: number, visualScale: number) {
+  return Number((value * visualScale).toFixed(2));
 }
 
 function observeStageScale(node: HTMLElement, onScale: (scale: number) => void) {

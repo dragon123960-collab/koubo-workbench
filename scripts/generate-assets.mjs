@@ -203,9 +203,11 @@ const alias = {
   lowpad: 'scifi-tech-hum-futuristic',
 };
 
+const DEFAULT_FONT_SIZE = 40;
+
 const textLayerDefaults = {
-  titleFontSize: 20,
-  textFontSize: 20,
+  titleFontSize: DEFAULT_FONT_SIZE,
+  textFontSize: DEFAULT_FONT_SIZE,
   titleFontWeight: 900,
   textFontWeight: 500,
   titleFontFamily: 'Microsoft YaHei, Noto Sans CJK SC, sans-serif',
@@ -228,8 +230,8 @@ function defaultProps(slug, title, category) {
       accent: '#2364aa',
       background: 'transparent',
       textColor: '#111827',
-      titleFontSize: 20,
-      itemFontSize: 20,
+      titleFontSize: DEFAULT_FONT_SIZE,
+      itemFontSize: DEFAULT_FONT_SIZE,
       titleOffsetX: 0,
       titleOffsetY: 0,
       itemsOffsetX: 0,
@@ -245,7 +247,7 @@ function defaultProps(slug, title, category) {
       accent: '#2364aa',
       textColor: '#111827',
       background: 'transparent',
-      fontSize: 20,
+      fontSize: DEFAULT_FONT_SIZE,
       fontWeight: 800,
       ...textLayerDefaults,
       titleFontWeight: 800,
@@ -253,24 +255,24 @@ function defaultProps(slug, title, category) {
     };
   }
   if (category === '数据信息图') {
-    return { title, text: '关键数据正在增长', value: '67%', accent: '#1f8a70', background: 'transparent', textColor: '#111827', fontSize: 20 };
+    return { title, text: '关键数据正在增长', value: '67%', accent: '#1f8a70', background: 'transparent', textColor: '#111827', fontSize: DEFAULT_FONT_SIZE };
   }
   if (category === '强调标注') {
-    return { title, text: '把注意力压到这一句', accent: '#e24b3b', background: 'transparent', textColor: '#111827', fontSize: 20 };
+    return { title, text: '把注意力压到这一句', accent: '#e24b3b', background: 'transparent', textColor: '#111827', fontSize: DEFAULT_FONT_SIZE };
   }
   if (category === '素材呈现' || category === '产品镜头') {
-    return { title, text: '真实素材 / 页面截图', accent: '#2364aa', background: 'transparent', textColor: '#111827', fontSize: 20 };
+    return { title, text: '真实素材 / 页面截图', accent: '#2364aa', background: 'transparent', textColor: '#111827', fontSize: DEFAULT_FONT_SIZE };
   }
   if (category === '人物互动') {
-    return { title, text: '讲者让位，信息上台', accent: '#8f5bff', background: 'transparent', textColor: '#111827', fontSize: 20 };
+    return { title, text: '讲者让位，信息上台', accent: '#8f5bff', background: 'transparent', textColor: '#111827', fontSize: DEFAULT_FONT_SIZE };
   }
   if (category === '转场结构') {
-    return { title, text: '章节切换', accent: '#111827', background: 'transparent', textColor: '#111827', fontSize: 20 };
+    return { title, text: '章节切换', accent: '#111827', background: 'transparent', textColor: '#111827', fontSize: DEFAULT_FONT_SIZE };
   }
   if (category === '运镜') {
-    return { title, text: '静态素材也要有镜头呼吸', accent: '#0f766e', background: 'transparent', textColor: '#111827', fontSize: 20 };
+    return { title, text: '静态素材也要有镜头呼吸', accent: '#0f766e', background: 'transparent', textColor: '#111827', fontSize: DEFAULT_FONT_SIZE };
   }
-  return { title, text: '一句话，一个视觉重音', accent: '#d9480f', background: 'transparent', textColor: '#111827', fontSize: 20, ...textLayerDefaults };
+  return { title, text: '一句话，一个视觉重音', accent: '#d9480f', background: 'transparent', textColor: '#111827', fontSize: DEFAULT_FONT_SIZE, ...textLayerDefaults };
 }
 
 function sizeFor(category) {

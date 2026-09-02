@@ -13,9 +13,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -56,9 +56,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -109,9 +109,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -152,9 +152,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -203,9 +203,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -246,9 +246,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -288,8 +288,8 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "titleFontSize": 20,
-      "itemFontSize": 20,
+      "titleFontSize": 40,
+      "itemFontSize": 40,
       "titleOffsetX": 0,
       "titleOffsetY": 0,
       "itemsOffsetX": 0,
@@ -347,9 +347,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -391,9 +391,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -442,9 +442,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -485,9 +485,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -538,9 +538,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -589,9 +589,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -640,9 +640,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -683,9 +683,9 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "fontSize": 40,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 900,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -735,10 +735,10 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "textColor": "#111827",
       "background": "transparent",
-      "fontSize": 20,
+      "fontSize": 40,
       "fontWeight": 800,
-      "titleFontSize": 20,
-      "textFontSize": 20,
+      "titleFontSize": 40,
+      "textFontSize": 40,
       "titleFontWeight": 800,
       "textFontWeight": 500,
       "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
@@ -770,7 +770,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -805,7 +805,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -860,7 +860,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -903,7 +903,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -982,8 +982,8 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "titleFontSize": 20,
-      "itemFontSize": 20,
+      "titleFontSize": 40,
+      "itemFontSize": 40,
       "titleOffsetX": 0,
       "titleOffsetY": 0,
       "itemsOffsetX": 0,
@@ -1058,7 +1058,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1101,7 +1101,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1146,7 +1146,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1181,7 +1181,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1234,7 +1234,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1278,7 +1278,7 @@ export const componentDefinitions = [
       "accent": "#e24b3b",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1322,7 +1322,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1359,7 +1359,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1430,7 +1430,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1466,7 +1466,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1541,7 +1541,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1622,7 +1622,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1675,8 +1675,8 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "titleFontSize": 20,
-      "itemFontSize": 20,
+      "titleFontSize": 40,
+      "itemFontSize": 40,
       "titleOffsetX": 0,
       "titleOffsetY": 0,
       "itemsOffsetX": 0,
@@ -1737,8 +1737,8 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "titleFontSize": 20,
-      "itemFontSize": 20,
+      "titleFontSize": 40,
+      "itemFontSize": 40,
       "titleOffsetX": 0,
       "titleOffsetY": 0,
       "itemsOffsetX": 0,
@@ -1806,7 +1806,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1843,7 +1843,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1950,7 +1950,7 @@ export const componentDefinitions = [
       "accent": "#1f8a70",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -1984,7 +1984,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2062,7 +2062,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2114,7 +2114,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2168,7 +2168,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2223,7 +2223,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2291,7 +2291,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2345,7 +2345,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2409,7 +2409,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2472,7 +2472,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2542,7 +2542,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2577,7 +2577,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2631,7 +2631,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2677,7 +2677,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2731,7 +2731,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2796,7 +2796,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2860,7 +2860,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2895,7 +2895,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2930,7 +2930,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -2965,7 +2965,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3000,7 +3000,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3035,7 +3035,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3070,7 +3070,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3105,7 +3105,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3151,7 +3151,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3215,7 +3215,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3240,7 +3240,7 @@ export const componentDefinitions = [
       "accent": "#111827",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3301,7 +3301,7 @@ export const componentDefinitions = [
       "accent": "#8f5bff",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3336,7 +3336,7 @@ export const componentDefinitions = [
       "accent": "#8f5bff",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3371,7 +3371,7 @@ export const componentDefinitions = [
       "accent": "#8f5bff",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3459,7 +3459,7 @@ export const componentDefinitions = [
       "accent": "#8f5bff",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3502,7 +3502,7 @@ export const componentDefinitions = [
       "accent": "#8f5bff",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3546,7 +3546,7 @@ export const componentDefinitions = [
       "accent": "#8f5bff",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3581,7 +3581,7 @@ export const componentDefinitions = [
       "accent": "#8f5bff",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3642,7 +3642,7 @@ export const componentDefinitions = [
       "accent": "#0f766e",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3667,7 +3667,7 @@ export const componentDefinitions = [
       "accent": "#0f766e",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3692,7 +3692,7 @@ export const componentDefinitions = [
       "accent": "#0f766e",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3717,7 +3717,7 @@ export const componentDefinitions = [
       "accent": "#0f766e",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3742,7 +3742,7 @@ export const componentDefinitions = [
       "accent": "#0f766e",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3767,7 +3767,7 @@ export const componentDefinitions = [
       "accent": "#0f766e",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3822,7 +3822,7 @@ export const componentDefinitions = [
       "accent": "#0f766e",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3868,7 +3868,7 @@ export const componentDefinitions = [
       "accent": "#0f766e",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3920,7 +3920,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3945,7 +3945,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3970,7 +3970,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -3995,7 +3995,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -4020,7 +4020,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -4045,7 +4045,7 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 40
     },
     "defaultTiming": {
       "enter": 0.45,
