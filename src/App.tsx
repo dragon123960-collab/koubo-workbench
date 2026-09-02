@@ -37,7 +37,7 @@ import {
   sentenceDuration,
   splitScriptIntoProject,
 } from './lib/project';
-import type { ComponentDefinition, ComponentInstance, MediaLayout, MediaSource, MediaTrack, MotionCategory, ScriptSentence, SfxCue, ShotBackgroundStyle, SubtitleSettings, WorkbenchProject } from './types';
+import type { ComponentDefinition, ComponentInstance, CornerBugSettings, GlobalStyleSettings, MediaLayout, MediaSource, MediaTrack, MotionCategory, ScriptSentence, SfxCue, ShotBackgroundStyle, SubtitleSettings, WorkbenchProject } from './types';
 
 const STAGE_W = 1920;
 const STAGE_H = 1080;
@@ -108,6 +108,7 @@ function App() {
   const selectedDefinition = selectedComponent ? componentDefinitions.find((def) => def.slug === selectedComponent.slug) : undefined;
   const activeShot = project.shots.find((shot) => currentTime >= shot.startSec && currentTime < shot.startSec + shot.durationSec) ?? project.shots[0];
   const activeSentence = project.script.find((sentence) => activeShot?.sentenceIds.includes(sentence.id)) ?? project.script[0];
+  const activeBackground = project.design.useGlobalBackground ? project.design.backgroundStyle : activeShot?.backgroundStyle;
   const activeComponents = project.components
     .filter((component) => currentTime >= component.startSec && currentTime <= component.startSec + component.durationSec)
     .sort((a, b) => a.z - b.z);
@@ -373,6 +374,23 @@ function App() {
     updateProject((draft) => ({ ...draft, subtitles: { ...draft.subtitles, ...patch } }));
   }
 
+  function updateDesign(patch: Partial<GlobalStyleSettings>) {
+    updateProject((draft) => ({ ...draft, design: { ...draft.design, ...patch } }));
+  }
+
+  function updateGlobalBackground(patch: Partial<ShotBackgroundStyle>) {
+    updateProject((draft) => ({ ...draft, design: { ...draft.design, backgroundStyle: { ...draft.design.backgroundStyle, ...patch } } }));
+  }
+
+  function updateCornerBug(patch: Partial<CornerBugSettings>) {
+    updateProject((draft) => ({ ...draft, design: { ...draft.design, cornerBug: { ...draft.design.cornerBug, ...patch } } }));
+  }
+
+  function setGlobalBackgroundFromActiveShot() {
+    if (!activeShot) return;
+    updateDesign({ useGlobalBackground: true, backgroundStyle: { ...activeShot.backgroundStyle } });
+  }
+
   function updateActiveShotBackground(patch: Partial<ShotBackgroundStyle>) {
     if (!activeShot) return;
     updateProject((draft) => ({
@@ -636,7 +654,8 @@ function App() {
   function renderStageContent(readOnly = false) {
     return (
       <>
-        <div className="stage-bg" style={stageBackgroundStyle(activeShot?.backgroundStyle)} />
+        <div className="stage-bg" style={stageBackgroundStyle(activeBackground)} />
+        <CornerBugOverlay settings={project.design.cornerBug} />
         {activeMediaTracks.map((track) => (
           <MediaLayer
             key={track.id}
@@ -1025,7 +1044,77 @@ function App() {
             </div>
             <div className="inspector">
               <div className="selected-title">
-                <strong>当前镜头背景</strong>
+                <strong>全片视觉</strong>
+                <code>global</code>
+              </div>
+              <label className="toggle-row">
+                <input type="checkbox" checked={project.design.useGlobalBackground} onChange={(event) => updateDesign({ useGlobalBackground: event.target.checked })} />
+                <span>所有镜头使用统一背景</span>
+              </label>
+              <label className="field">
+                <span>统一背景类型</span>
+                <select value={project.design.backgroundStyle.type} onChange={(event) => updateGlobalBackground({ type: event.target.value as ShotBackgroundStyle['type'] })}>
+                  <option value="lightGrid">浅色网格</option>
+                  <option value="darkGrid">深色网格</option>
+                  <option value="solid">纯色</option>
+                  <option value="image">图片</option>
+                </select>
+              </label>
+              <label className="field">
+                <span>统一背景色</span>
+                <input type="color" value={project.design.backgroundStyle.color} onChange={(event) => updateGlobalBackground({ color: event.target.value })} />
+              </label>
+              <label className="field">
+                <span>统一背景图 URL</span>
+                <input value={project.design.backgroundStyle.imageUrl} onChange={(event) => updateGlobalBackground({ imageUrl: event.target.value })} placeholder="/media/bg.png 或 https://..." />
+              </label>
+              <div className="mini-title">全片角标</div>
+              <label className="toggle-row">
+                <input type="checkbox" checked={project.design.cornerBug.enabled} onChange={(event) => updateCornerBug({ enabled: event.target.checked })} />
+                <span>显示统一角标</span>
+              </label>
+              <div className="field-grid">
+                <label className="field">
+                  <span>位置</span>
+                  <select value={project.design.cornerBug.position} onChange={(event) => updateCornerBug({ position: event.target.value as CornerBugSettings['position'] })}>
+                    <option value="topLeft">左上</option>
+                    <option value="topRight">右上</option>
+                  </select>
+                </label>
+                <Field label="字号" value={project.design.cornerBug.fontSize} type="number" onChange={(value) => updateCornerBug({ fontSize: Number(value) })} />
+                <Field label="X 边距" value={project.design.cornerBug.x} type="number" onChange={(value) => updateCornerBug({ x: Number(value) })} />
+                <Field label="Y 边距" value={project.design.cornerBug.y} type="number" onChange={(value) => updateCornerBug({ y: Number(value) })} />
+              </div>
+              <label className="field">
+                <span>角标主标题</span>
+                <input value={project.design.cornerBug.title} onChange={(event) => updateCornerBug({ title: event.target.value })} />
+              </label>
+              <label className="field">
+                <span>角标副标题</span>
+                <input value={project.design.cornerBug.subtitle} onChange={(event) => updateCornerBug({ subtitle: event.target.value })} />
+              </label>
+              <div className="field-grid">
+                <label className="field">
+                  <span>文字色</span>
+                  <input type="color" value={project.design.cornerBug.textColor} onChange={(event) => updateCornerBug({ textColor: event.target.value })} />
+                </label>
+                <label className="field">
+                  <span>强调色</span>
+                  <input type="color" value={project.design.cornerBug.accent} onChange={(event) => updateCornerBug({ accent: event.target.value })} />
+                </label>
+              </div>
+              <label className="field">
+                <span>角标背景</span>
+                <input value={project.design.cornerBug.background} onChange={(event) => updateCornerBug({ background: event.target.value })} placeholder="transparent 或 rgba(...)" />
+              </label>
+              <label className="field">
+                <span>角标透明度</span>
+                <input type="range" min="0" max="1" step="0.01" value={project.design.cornerBug.opacity} onChange={(event) => updateCornerBug({ opacity: Number(event.target.value) })} />
+              </label>
+            </div>
+            <div className="inspector">
+              <div className="selected-title">
+                <strong>{project.design.useGlobalBackground ? '当前镜头背景覆盖' : '当前镜头背景'}</strong>
                 <code>{activeShot?.id ?? 'shot'}</code>
               </div>
               <label className="field">
@@ -1045,7 +1134,10 @@ function App() {
                 <span>背景图 URL</span>
                 <input value={activeShot?.backgroundStyle.imageUrl ?? ''} onChange={(event) => updateActiveShotBackground({ imageUrl: event.target.value })} placeholder="/media/bg.png 或 https://..." />
               </label>
-              <button type="button" className="wide-button" onClick={applyActiveShotBackgroundToAll}>应用到全部镜头</button>
+              <div className="button-row">
+                <button type="button" className="wide-button" onClick={setGlobalBackgroundFromActiveShot}>设为全片背景</button>
+                <button type="button" className="wide-button" onClick={applyActiveShotBackgroundToAll}>复制到全部镜头</button>
+              </div>
             </div>
             {selectedMediaTrack ? (
               <div className="inspector">
@@ -1818,6 +1910,27 @@ function CanvasMaterializePreview({ progress, title }: { progress: number; title
       {[0, 1, 2].map((i) => (
         <div key={i} className="floating-note" style={{ transform: `translate(${clamp((progress - 0.28 - i * 0.08) * 2, 0, 1) * (250 + i * 32)}px, ${-70 + i * 86}px) rotate(${[-2, 1, 2][i]}deg)`, opacity: clamp((progress - 0.25 - i * 0.08) * 3, 0, 1) }} />
       ))}
+    </div>
+  );
+}
+
+function CornerBugOverlay({ settings }: { settings: CornerBugSettings }) {
+  if (!settings.enabled) return null;
+  const style: CSSProperties & Record<'--corner-accent' | '--corner-font', string> = {
+    top: `${settings.y}px`,
+    opacity: settings.opacity,
+    color: settings.textColor,
+    background: settings.background,
+    '--corner-accent': settings.accent,
+    '--corner-font': `${settings.fontSize}px`,
+  };
+  if (settings.position === 'topRight') style.right = `${settings.x}px`;
+  else style.left = `${settings.x}px`;
+
+  return (
+    <div className={`corner-bug ${settings.position}`} style={style}>
+      <strong>{settings.title}</strong>
+      {settings.subtitle ? <span>{settings.subtitle}</span> : null}
     </div>
   );
 }

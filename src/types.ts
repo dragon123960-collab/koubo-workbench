@@ -22,6 +22,26 @@ export type ShotBackgroundStyle = {
   imageUrl: string;
 };
 
+export type CornerBugSettings = {
+  enabled: boolean;
+  position: 'topLeft' | 'topRight';
+  title: string;
+  subtitle: string;
+  textColor: string;
+  background: string;
+  accent: string;
+  opacity: number;
+  fontSize: number;
+  x: number;
+  y: number;
+};
+
+export type GlobalStyleSettings = {
+  useGlobalBackground: boolean;
+  backgroundStyle: ShotBackgroundStyle;
+  cornerBug: CornerBugSettings;
+};
+
 export type Shot = {
   id: string;
   title: string;
@@ -144,6 +164,7 @@ export type WorkbenchProject = {
   script: ScriptSentence[];
   shots: Shot[];
   components: ComponentInstance[];
+  design: GlobalStyleSettings;
   voice: VoiceTrack;
   media: {
     sources: MediaSource[];

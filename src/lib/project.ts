@@ -1,4 +1,4 @@
-import type { ComponentDefinition, ComponentInstance, MediaLayout, MediaSource, MediaTrack, Shot, ShotBackgroundStyle, SubtitleSettings, VoiceTrack, WorkbenchProject } from '../types';
+import type { ComponentDefinition, ComponentInstance, GlobalStyleSettings, MediaLayout, MediaSource, MediaTrack, Shot, ShotBackgroundStyle, SubtitleSettings, VoiceTrack, WorkbenchProject } from '../types';
 import { componentDefinitions } from '../data/generated';
 
 const nowIso = () => new Date().toISOString();
@@ -32,6 +32,26 @@ export const defaultSubtitleSettings: SubtitleSettings = {
   keywords: '视觉重音,动效,音效,Remotion',
   fontSize: 44,
 };
+
+export function defaultGlobalStyleSettings(useGlobalBackground = true): GlobalStyleSettings {
+  return {
+    useGlobalBackground,
+    backgroundStyle: { type: 'lightGrid', color: '#f7f1e8', imageUrl: '' },
+    cornerBug: {
+      enabled: true,
+      position: 'topLeft',
+      title: 'AI说事 · 大树Tree',
+      subtitle: 'Vibe Coding 科普',
+      textColor: '#2d2521',
+      background: 'rgba(255,255,255,0.66)',
+      accent: '#c96752',
+      opacity: 0.92,
+      fontSize: 28,
+      x: 72,
+      y: 54,
+    },
+  };
+}
 
 function defaultShotBackground(index: number): ShotBackgroundStyle {
   return index % 2 === 0
@@ -116,6 +136,7 @@ export function createDefaultProject(): WorkbenchProject {
     script,
     shots,
     components: starters,
+    design: defaultGlobalStyleSettings(true),
     voice: { ...defaultVoiceTrack, durationSec: getTotalDuration({ shots, components: starters } as WorkbenchProject) },
     media: { sources: [], tracks: [] },
     subtitles: { ...defaultSubtitleSettings },
@@ -126,6 +147,7 @@ export function createDefaultProject(): WorkbenchProject {
 
 export function normalizeProject(project: WorkbenchProject): WorkbenchProject {
   const rawShape = project.subtitles?.shape;
+  const fallbackDesign = defaultGlobalStyleSettings(false);
   return {
     ...project,
     shots: project.shots.map((shot, index) => ({
@@ -142,6 +164,18 @@ export function normalizeProject(project: WorkbenchProject): WorkbenchProject {
         chars: sentence.chars?.length ? sentence.chars : buildSentenceChars(sentence.text, start, end),
       };
     }),
+    design: {
+      ...fallbackDesign,
+      ...(project.design ?? {}),
+      backgroundStyle: {
+        ...fallbackDesign.backgroundStyle,
+        ...(project.design?.backgroundStyle ?? {}),
+      },
+      cornerBug: {
+        ...fallbackDesign.cornerBug,
+        ...(project.design?.cornerBug ?? {}),
+      },
+    },
     voice: { ...defaultVoiceTrack, ...(project.voice ?? {}) },
     media: {
       sources: project.media?.sources ?? [],
@@ -244,6 +278,7 @@ export function exportRemotionProps(project: WorkbenchProject) {
     script: project.script,
     shots: project.shots,
     components: project.components,
+    design: project.design,
     voice: project.voice,
     media: project.media,
     subtitles: project.subtitles,
