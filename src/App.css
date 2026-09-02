@@ -533,19 +533,26 @@ select:focus {
   display: grid;
   place-items: center;
   padding: 14px;
+  overflow: hidden;
   background: #dfe5ec;
+}
+
+.stage-viewport {
+  position: relative;
+  flex: 0 0 auto;
 }
 
 .stage {
   position: relative;
-  width: min(100%, calc((100vh - var(--timeline-height) - 164px) * 16 / 9));
-  max-height: calc(100vh - var(--timeline-height) - 164px);
-  aspect-ratio: 16 / 9;
+  width: 1920px;
+  height: 1080px;
   overflow: hidden;
   background: #f8fafc;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   box-shadow: 0 25px 70px rgba(15, 23, 42, 0.28);
+  transform: scale(var(--stage-scale, 1));
+  transform-origin: left top;
 }
 
 .stage-bg,
@@ -581,7 +588,7 @@ select:focus {
   display: grid;
   gap: 5px;
   color: rgba(19, 24, 32, 0.7);
-  font-size: clamp(10px, 1.25vw, 18px);
+  font-size: 18px;
   pointer-events: none;
 }
 
@@ -1037,12 +1044,15 @@ select:focus {
   color: var(--accent);
   font-size: var(--motion-title-font, 20px);
   line-height: 1.08;
-  overflow-wrap: anywhere;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  transform: translate(var(--list-title-x, 0), var(--list-title-y, 0));
 }
 
 .motion-list > div {
   display: grid;
   gap: 14px;
+  transform: translate(var(--list-items-x, 0), var(--list-items-y, 0));
 }
 
 .motion-list span {
@@ -1077,7 +1087,8 @@ select:focus {
   color: var(--motion-item-color, var(--component-text, var(--ink)));
   font-size: var(--motion-item-font, 20px);
   line-height: 1.2;
-  overflow-wrap: anywhere;
+  word-break: keep-all;
+  overflow-wrap: normal;
   white-space: normal;
 }
 
@@ -1245,7 +1256,7 @@ select:focus {
 
 .motion-transition span {
   z-index: 2;
-  font-size: clamp(28px, 4vw, 82px);
+  font-size: 82px;
   font-weight: 900;
 }
 
@@ -1334,7 +1345,7 @@ select:focus {
 
 .camera-page strong {
   display: block;
-  font-size: clamp(20px, 2.4vw, 44px);
+  font-size: 44px;
 }
 
 .camera-page p {
@@ -1363,7 +1374,7 @@ select:focus {
 .motion-timeline-travel strong {
   display: block;
   margin-bottom: 120px;
-  font-size: clamp(22px, 3vw, 54px);
+  font-size: 54px;
 }
 
 .motion-timeline-travel .axis {
@@ -1964,17 +1975,11 @@ select:focus {
 }
 
 .stage.stage-preview {
-  width: min(100%, calc((100vh - 150px) * 16 / 9));
-  max-height: calc(100vh - 150px);
   pointer-events: none;
 }
 
 @media (max-height: 760px) {
   .app-shell {
     grid-template-rows: 60px minmax(0, 1fr) 164px;
-  }
-
-  .stage {
-    max-height: calc(100vh - 310px);
   }
 }

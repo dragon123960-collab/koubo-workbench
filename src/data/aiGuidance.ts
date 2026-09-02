@@ -30,17 +30,17 @@ const guidanceBySlug: Record<string, Guidance> = {
   'line-by-line-slide': {
     aiUse: '多条并列信息按行出现，适合列举几个例子、问题或判断。',
     sentenceSignals: ['比如', '包括', '哪些', '几个', '一是', '二是'],
-    editProps: ['title', 'items', 'titleFontSize', 'itemFontSize', 'itemBackground', 'itemTextColor', 'accent', 'background'],
+    editProps: ['title', 'items', 'titleFontSize', 'itemFontSize', 'titleOffsetX', 'titleOffsetY', 'itemsOffsetX', 'itemsOffsetY', 'itemBackground', 'itemTextColor', 'accent', 'background'],
   },
   'step-timeline-vertical': {
     aiUse: '竖向步骤 1、2、3 依次出现，适合流程、三类内容、检查清单。',
     sentenceSignals: ['第一', '第二', '第三', '三类', '步骤', '流程'],
-    editProps: ['title', 'items', 'titleFontSize', 'itemFontSize', 'itemBackground', 'itemTextColor', 'accent', 'background'],
+    editProps: ['title', 'items', 'titleFontSize', 'itemFontSize', 'titleOffsetX', 'titleOffsetY', 'itemsOffsetX', 'itemsOffsetY', 'itemBackground', 'itemTextColor', 'accent', 'background'],
   },
   'numbered-step-stack': {
     aiUse: '编号卡片堆叠入场，适合把多个规则压成一组可记忆条目。',
     sentenceSignals: ['第一', '第二', '第三', '清单', '条目'],
-    editProps: ['title', 'items', 'titleFontSize', 'itemFontSize', 'itemBackground', 'itemTextColor', 'accent', 'background'],
+    editProps: ['title', 'items', 'titleFontSize', 'itemFontSize', 'titleOffsetX', 'titleOffsetY', 'itemsOffsetX', 'itemsOffsetY', 'itemBackground', 'itemTextColor', 'accent', 'background'],
   },
   'ui-flow-theater': {
     aiUse: '表现从普通输入到结构化输出的变化，适合提示词升级、流程转化。',
@@ -85,7 +85,7 @@ const guidanceBySlug: Record<string, Guidance> = {
   'focus-dim-spotlight': {
     aiUse: '同一画面中逐个切换焦点，适合三四个选项逐一被点亮。',
     sentenceSignals: ['第一', '第二', '第三', '依次', '逐个'],
-    editProps: ['title', 'items', 'titleFontSize', 'itemFontSize', 'itemBackground', 'itemTextColor', 'accent', 'background'],
+    editProps: ['title', 'items', 'titleFontSize', 'itemFontSize', 'titleOffsetX', 'titleOffsetY', 'itemsOffsetX', 'itemsOffsetY', 'itemBackground', 'itemTextColor', 'accent', 'background'],
   },
 };
 

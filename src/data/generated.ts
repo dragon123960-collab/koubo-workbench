@@ -242,6 +242,10 @@ export const componentDefinitions = [
       "textColor": "#111827",
       "titleFontSize": 20,
       "itemFontSize": 20,
+      "titleOffsetX": 0,
+      "titleOffsetY": 0,
+      "itemsOffsetX": 0,
+      "itemsOffsetY": 0,
       "itemBackground": "transparent",
       "itemTextColor": "#111827"
     },
@@ -860,6 +864,10 @@ export const componentDefinitions = [
       "textColor": "#111827",
       "titleFontSize": 20,
       "itemFontSize": 20,
+      "titleOffsetX": 0,
+      "titleOffsetY": 0,
+      "itemsOffsetX": 0,
+      "itemsOffsetY": 0,
       "itemBackground": "transparent",
       "itemTextColor": "#111827"
     },
@@ -1549,6 +1557,10 @@ export const componentDefinitions = [
       "textColor": "#111827",
       "titleFontSize": 20,
       "itemFontSize": 20,
+      "titleOffsetX": 0,
+      "titleOffsetY": 0,
+      "itemsOffsetX": 0,
+      "itemsOffsetY": 0,
       "itemBackground": "transparent",
       "itemTextColor": "#111827"
     },
@@ -1607,6 +1619,10 @@ export const componentDefinitions = [
       "textColor": "#111827",
       "titleFontSize": 20,
       "itemFontSize": 20,
+      "titleOffsetX": 0,
+      "titleOffsetY": 0,
+      "itemsOffsetX": 0,
+      "itemsOffsetY": 0,
       "itemBackground": "transparent",
       "itemTextColor": "#111827"
     },

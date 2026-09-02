@@ -88,6 +88,10 @@ function App() {
   const [scriptDraft, setScriptDraft] = useState(project.script.map((line) => line.text).join('\n'));
   const [drag, setDrag] = useState<DragState | null>(null);
   const [timelineDrag, setTimelineDrag] = useState<{ type: 'playhead' | 'clip'; kind?: 'component' | 'media'; id?: string; offset?: number } | null>(null);
+  const [stageScale, setStageScale] = useState(1);
+  const [previewScale, setPreviewScale] = useState(0.65);
+  const stageWrapRef = useRef<HTMLDivElement | null>(null);
+  const previewShellRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const timelineRef = useRef<HTMLDivElement | null>(null);
   const draggedDefinitionRef = useRef<ComponentDefinition | null>(null);
@@ -138,6 +142,19 @@ function App() {
   useEffect(() => {
     engineRef.current = new SfxEngine(sfxAssets);
   }, []);
+
+  useEffect(() => {
+    const node = stageWrapRef.current;
+    if (!node) return undefined;
+    return observeStageScale(node, setStageScale);
+  }, []);
+
+  useEffect(() => {
+    if (!showStagePreview) return undefined;
+    const node = previewShellRef.current;
+    if (!node) return undefined;
+    return observeStageScale(node, setPreviewScale);
+  }, [showStagePreview]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -460,13 +477,17 @@ function App() {
   }
 
   function stagePoint(event: PointerEvent) {
+    return pointFromStage(event.clientX, event.clientY);
+  }
+
+  function pointFromStage(clientX: number, clientY: number) {
     const rect = stageRef.current?.getBoundingClientRect();
     if (!rect) return { x: 0, y: 0 };
     const scaleX = STAGE_W / rect.width;
     const scaleY = STAGE_H / rect.height;
     return {
-      x: (event.clientX - rect.left) * scaleX,
-      y: (event.clientY - rect.top) * scaleY,
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY,
     };
   }
 
@@ -560,10 +581,8 @@ function App() {
     event.preventDefault();
     const slug = event.dataTransfer.getData('application/x-koubo-component') || draggedDefinitionRef.current?.slug;
     const def = componentDefinitions.find((item) => item.slug === slug);
-    const rect = stageRef.current?.getBoundingClientRect();
-    if (!def || !rect) return;
-    const x = ((event.clientX - rect.left) / rect.width) * STAGE_W;
-    const y = ((event.clientY - rect.top) / rect.height) * STAGE_H;
+    if (!def) return;
+    const { x, y } = pointFromStage(event.clientX, event.clientY);
     createComponentAt(def, x, y);
     draggedDefinitionRef.current = null;
   }
@@ -938,7 +957,7 @@ function App() {
                 {project.sfx.enabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
               </button>
               <span className="timecode">{formatTime(currentTime)} / {formatTime(totalDuration)}</span>
-              <span className="stage-size-pill">1920x1080</span>
+              <span className="stage-size-pill">1920x1080 · {Math.round(stageScale * 100)}%</span>
               <button type="button" className="wide-button" onClick={() => setShowStagePreview(true)}>
                 <Maximize2 size={14} />
                 出片检查
@@ -950,20 +969,29 @@ function App() {
             </div>
           </div>
 
-          <div className="stage-wrap panel">
+          <div ref={stageWrapRef} className="stage-wrap panel">
             <div
-              ref={stageRef}
-              className="stage"
-              onPointerMove={onStagePointerMove}
-              onPointerUp={() => setDrag(null)}
-              onPointerLeave={() => setDrag(null)}
-              onDragOver={(event) => {
-                event.preventDefault();
-                event.dataTransfer.dropEffect = 'copy';
-              }}
-              onDrop={dropComponent}
+              className="stage-viewport"
+              style={{
+                '--stage-scale': stageScale,
+                width: `${STAGE_W * stageScale}px`,
+                height: `${STAGE_H * stageScale}px`,
+              } as CSSProperties}
             >
-              {renderStageContent()}
+              <div
+                ref={stageRef}
+                className="stage"
+                onPointerMove={onStagePointerMove}
+                onPointerUp={() => setDrag(null)}
+                onPointerLeave={() => setDrag(null)}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  event.dataTransfer.dropEffect = 'copy';
+                }}
+                onDrop={dropComponent}
+              >
+                {renderStageContent()}
+              </div>
             </div>
           </div>
         </section>
@@ -1295,9 +1323,18 @@ function App() {
               </div>
               <button type="button" className="wide-button" onClick={() => setShowStagePreview(false)}>关闭</button>
             </div>
-            <div className="preview-stage-shell">
-              <div className="stage stage-preview">
-                {renderStageContent(true)}
+            <div ref={previewShellRef} className="preview-stage-shell">
+              <div
+                className="stage-viewport stage-preview-viewport"
+                style={{
+                  '--stage-scale': previewScale,
+                  width: `${STAGE_W * previewScale}px`,
+                  height: `${STAGE_H * previewScale}px`,
+                } as CSSProperties}
+              >
+                <div className="stage stage-preview">
+                  {renderStageContent(true)}
+                </div>
               </div>
             </div>
           </div>
@@ -1479,6 +1516,10 @@ function MotionPreview({ component, definition, progress, enter, local }: { comp
         itemFontSize={Number(component.props.itemFontSize ?? fontSize)}
         itemBackground={String(component.props.itemBackground ?? 'transparent')}
         itemTextColor={String(component.props.itemTextColor ?? component.props.textColor ?? '#111827')}
+        titleOffsetX={Number(component.props.titleOffsetX ?? 0)}
+        titleOffsetY={Number(component.props.titleOffsetY ?? 0)}
+        itemsOffsetX={Number(component.props.itemsOffsetX ?? 0)}
+        itemsOffsetY={Number(component.props.itemsOffsetY ?? 0)}
       />
     );
   }
@@ -1607,6 +1648,10 @@ function ListPreview({
   itemFontSize,
   itemBackground,
   itemTextColor,
+  titleOffsetX,
+  titleOffsetY,
+  itemsOffsetX,
+  itemsOffsetY,
 }: {
   title: string;
   items: string[];
@@ -1615,6 +1660,10 @@ function ListPreview({
   itemFontSize: number;
   itemBackground: string;
   itemTextColor: string;
+  titleOffsetX: number;
+  titleOffsetY: number;
+  itemsOffsetX: number;
+  itemsOffsetY: number;
 }) {
   const visibleItems = items.length ? items : ['项目目标', '开发规则', '验收标准'];
   return (
@@ -1625,6 +1674,10 @@ function ListPreview({
         '--motion-item-font': `${itemFontSize}px`,
         '--motion-item-bg': itemBackground,
         '--motion-item-color': itemTextColor,
+        '--list-title-x': `${titleOffsetX}px`,
+        '--list-title-y': `${titleOffsetY}px`,
+        '--list-items-x': `${itemsOffsetX}px`,
+        '--list-items-y': `${itemsOffsetY}px`,
       } as CSSProperties}
     >
       <strong>{title}</strong>
@@ -1898,6 +1951,10 @@ function propLabel(key: string) {
     fontSize: '字体大小',
     titleFontSize: '标题字体大小',
     itemFontSize: '条目字体大小',
+    titleOffsetX: '标题横向偏移',
+    titleOffsetY: '标题纵向偏移',
+    itemsOffsetX: '条目横向偏移',
+    itemsOffsetY: '条目纵向偏移',
     itemBackground: '条目背景',
     itemTextColor: '条目文字色',
     value: '数字/指标',
@@ -1909,6 +1966,7 @@ function propLabel(key: string) {
 }
 
 function defaultPropValue(key: string): string | number | boolean {
+  if (key.toLowerCase().includes('offset')) return 0;
   if (key.toLowerCase().includes('size')) return 20;
   if (key.toLowerCase().includes('width')) return 70;
   if (key.toLowerCase().includes('height')) return 42;
@@ -1918,6 +1976,26 @@ function defaultPropValue(key: string): string | number | boolean {
   if (key === 'itemTextColor') return '#111827';
   if (key === 'align') return 'left';
   return '';
+}
+
+function observeStageScale(node: HTMLElement, onScale: (scale: number) => void) {
+  const measure = () => {
+    const style = window.getComputedStyle(node);
+    const paddingX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+    const paddingY = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    const availableW = Math.max(1, node.clientWidth - paddingX);
+    const availableH = Math.max(1, node.clientHeight - paddingY);
+    const next = clamp(Math.min(availableW / STAGE_W, availableH / STAGE_H), 0.05, 1);
+    onScale(Number(next.toFixed(4)));
+  };
+  const observer = new ResizeObserver(measure);
+  observer.observe(node);
+  window.addEventListener('resize', measure);
+  measure();
+  return () => {
+    observer.disconnect();
+    window.removeEventListener('resize', measure);
+  };
 }
 
 function stageBackgroundStyle(background?: ShotBackgroundStyle): CSSProperties {
