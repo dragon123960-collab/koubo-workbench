@@ -752,14 +752,20 @@ select:focus {
 }
 
 .motion-text strong {
-  font-size: var(--motion-font, 20px);
+  color: var(--motion-title-color, var(--component-text, #111827));
+  font-family: var(--motion-title-family, inherit);
+  font-size: var(--motion-title-font, var(--motion-font, 20px));
+  font-weight: var(--motion-title-weight, 900);
   line-height: 1;
   overflow-wrap: anywhere;
 }
 
 .motion-text span {
   max-width: 86%;
-  font-size: calc(var(--motion-font, 20px) * 0.36);
+  color: var(--motion-body-color, var(--component-text, #111827));
+  font-family: var(--motion-body-family, inherit);
+  font-size: var(--motion-body-font, calc(var(--motion-font, 20px) * 0.36));
+  font-weight: var(--motion-body-weight, 500);
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
@@ -795,12 +801,18 @@ select:focus {
 }
 
 .motion-static-text strong {
-  font-size: 1em;
+  color: var(--motion-title-color, var(--component-text, #111827));
+  font-family: var(--motion-title-family, inherit);
+  font-size: var(--motion-title-font, var(--motion-font, 20px));
+  font-weight: var(--motion-title-weight, 800);
+  line-height: 1.08;
 }
 
 .motion-static-text span {
-  font-size: 0.46em;
-  font-weight: 500;
+  color: var(--motion-body-color, var(--component-text, #111827));
+  font-family: var(--motion-body-family, inherit);
+  font-size: var(--motion-body-font, calc(var(--motion-font, 20px) * 0.46));
+  font-weight: var(--motion-body-weight, 500);
   line-height: 1.35;
 }
 
@@ -830,7 +842,10 @@ select:focus {
 }
 
 .type-panel strong {
-  font-size: calc(var(--motion-font, 20px) * 1.3);
+  color: var(--motion-title-color, var(--component-text, #111827));
+  font-family: var(--motion-title-family, inherit);
+  font-size: var(--motion-title-font, calc(var(--motion-font, 20px) * 1.3));
+  font-weight: var(--motion-title-weight, 800);
   line-height: 1.15;
 }
 
@@ -838,8 +853,10 @@ select:focus {
   min-width: 0;
   margin: 0;
   overflow: hidden;
-  font-family: var(--mono);
-  font-size: var(--motion-font, 20px);
+  color: var(--motion-body-color, var(--component-text, #111827));
+  font-family: var(--motion-body-family, var(--mono));
+  font-size: var(--motion-body-font, var(--motion-font, 20px));
+  font-weight: var(--motion-body-weight, 500);
   line-height: 1.38;
   white-space: pre-wrap;
   overflow-wrap: anywhere;

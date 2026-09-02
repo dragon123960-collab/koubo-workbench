@@ -332,6 +332,26 @@ function App() {
           if (typeof value === 'number') {
             return <Field key={key} label={propLabel(key)} value={value} type="number" step={key.toLowerCase().includes('size') ? '1' : '0.1'} onChange={(next) => updateSelectedProps(key, Number(next))} />;
           }
+          if (key.toLowerCase().includes('fontfamily')) {
+            return (
+              <label key={key} className="field">
+                <span>{propLabel(key)}</span>
+                <select value={String(value)} onChange={(event) => updateSelectedProps(key, event.target.value)}>
+                  {fontFamilyOptions.map((option) => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                  ))}
+                </select>
+              </label>
+            );
+          }
+          if (key.toLowerCase().includes('color') && /^#[0-9a-f]{6}$/i.test(String(value))) {
+            return (
+              <label key={key} className="field">
+                <span>{propLabel(key)}</span>
+                <input type="color" value={String(value)} onChange={(event) => updateSelectedProps(key, event.target.value)} />
+              </label>
+            );
+          }
           const isLong = key === 'items' || String(value).length > 44;
           return (
             <label key={key} className="field">
@@ -1500,7 +1520,7 @@ function MotionPreview({ component, definition, progress, enter, local }: { comp
   const fontSize = Number(component.props.fontSize ?? 20);
 
   if (component.slug === 'static-text-block') return <StaticTextPreview component={component} fontSize={fontSize} />;
-  if (component.slug === 'typewriter-reveal') return <TypewriterPreview title={title} text={text} progress={progress} fontSize={fontSize} assetUrl={assetUrl} />;
+  if (component.slug === 'typewriter-reveal') return <TypewriterPreview component={component} title={title} text={text} progress={progress} fontSize={fontSize} assetUrl={assetUrl} />;
   if (component.slug === 'highlighter-sweep') return <HighlighterPreview title={title} text={text} progress={progress} fontSize={fontSize} width={Number(component.props.highlightWidth ?? 70)} />;
   if (component.slug === 'hand-drawn-ellipse') return <EllipsePreview title={title} text={text} progress={progress} fontSize={fontSize} ellipseWidth={Number(component.props.ellipseWidth ?? 76)} ellipseHeight={Number(component.props.ellipseHeight ?? 42)} />;
   if (component.slug === 'ink-underline') return <InkUnderlinePreview title={title} text={text} progress={progress} fontSize={fontSize} width={Number(component.props.underlineWidth ?? 68)} />;
@@ -1530,12 +1550,12 @@ function MotionPreview({ component, definition, progress, enter, local }: { comp
   if (category === '转场结构') return <TransitionPreview title={title} progress={progress} />;
   if (category === '人物互动') return <HostPreview title={title} text={text} progress={progress} />;
   if (category === '运镜') return <CameraPreview title={title} text={text} local={local} assetUrl={assetUrl} />;
-  return <TextPreview title={title} text={text} enter={enter} progress={progress} keyword={keyword} keywordColor={keywordColor} fontSize={fontSize} />;
+  return <TextPreview component={component} title={title} text={text} enter={enter} progress={progress} keyword={keyword} keywordColor={keywordColor} fontSize={fontSize} />;
 }
 
-function TextPreview({ title, text, enter, progress, keyword, keywordColor, fontSize }: { title: string; text: string; enter: number; progress: number; keyword: string; keywordColor: string; fontSize: number }) {
+function TextPreview({ component, title, text, enter, progress, keyword, keywordColor, fontSize }: { component: ComponentInstance; title: string; text: string; enter: number; progress: number; keyword: string; keywordColor: string; fontSize: number }) {
   return (
-    <div className="motion-text" style={{ transform: `translateY(${(1 - enter) * 28}px) scale(${0.96 + enter * 0.04})`, '--motion-font': `${fontSize}px` } as CSSProperties}>
+    <div className="motion-text" style={{ ...textLayerVars(component.props, fontSize), transform: `translateY(${(1 - enter) * 28}px) scale(${0.96 + enter * 0.04})` } as CSSProperties}>
       <strong>{highlightText(title, keyword, keywordColor)}</strong>
       <span>{highlightText(text, keyword, keywordColor)}</span>
       <i style={{ transform: `scaleX(${clamp(progress * 1.4, 0, 1)})` }} />
@@ -1546,21 +1566,19 @@ function TextPreview({ title, text, enter, progress, keyword, keywordColor, font
 function StaticTextPreview({ component, fontSize }: { component: ComponentInstance; fontSize: number }) {
   const title = String(component.props.title ?? '');
   const text = String(component.props.text ?? '');
-  const textColor = String(component.props.textColor ?? '#111827');
   const align = String(component.props.align ?? 'left');
-  const weight = Number(component.props.fontWeight ?? 800);
   return (
-    <div className={`motion-static-text align-${align}`} style={{ color: textColor, fontSize: `${fontSize}px`, fontWeight: weight }}>
+    <div className={`motion-static-text align-${align}`} style={textLayerVars(component.props, fontSize)}>
       <strong>{title}</strong>
       <span>{text}</span>
     </div>
   );
 }
 
-function TypewriterPreview({ title, text, progress, fontSize, assetUrl }: { title: string; text: string; progress: number; fontSize: number; assetUrl: string }) {
+function TypewriterPreview({ component, title, text, progress, fontSize, assetUrl }: { component: ComponentInstance; title: string; text: string; progress: number; fontSize: number; assetUrl: string }) {
   const shown = text.slice(0, Math.max(1, Math.round(text.length * clamp(progress * 1.8, 0, 1))));
   return (
-    <div className={assetUrl ? 'motion-typewriter with-asset' : 'motion-typewriter'} style={{ '--motion-font': `${fontSize}px` } as CSSProperties}>
+    <div className={assetUrl ? 'motion-typewriter with-asset' : 'motion-typewriter'} style={textLayerVars(component.props, fontSize)}>
       <div className="type-panel">
         <strong>{title}</strong>
         <pre>{shown}</pre>
@@ -1950,11 +1968,18 @@ function propLabel(key: string) {
     item5: '条目 5',
     fontSize: '字体大小',
     titleFontSize: '标题字体大小',
+    textFontSize: '下行文字大小',
     itemFontSize: '条目字体大小',
+    titleFontFamily: '标题字体',
+    textFontFamily: '下行字体',
     titleOffsetX: '标题横向偏移',
     titleOffsetY: '标题纵向偏移',
     itemsOffsetX: '条目横向偏移',
     itemsOffsetY: '条目纵向偏移',
+    titleFontWeight: '标题字重',
+    textFontWeight: '下行字重',
+    titleColor: '标题颜色',
+    bodyColor: '下行颜色',
     itemBackground: '条目背景',
     itemTextColor: '条目文字色',
     value: '数字/指标',
@@ -1966,16 +1991,44 @@ function propLabel(key: string) {
 }
 
 function defaultPropValue(key: string): string | number | boolean {
+  if (key.toLowerCase().includes('fontfamily')) return fontFamilyOptions[0].value;
   if (key.toLowerCase().includes('offset')) return 0;
   if (key.toLowerCase().includes('size')) return 20;
   if (key.toLowerCase().includes('width')) return 70;
   if (key.toLowerCase().includes('height')) return 42;
-  if (key === 'fontWeight') return 800;
+  if (key.toLowerCase().includes('fontweight')) return key === 'textFontWeight' ? 500 : 800;
+  if (key === 'titleColor' || key === 'bodyColor') return '#111827';
   if (key === 'background') return 'transparent';
   if (key === 'itemBackground') return 'transparent';
   if (key === 'itemTextColor') return '#111827';
   if (key === 'align') return 'left';
   return '';
+}
+
+const fontFamilyOptions = [
+  { label: '雅黑 / 黑体', value: 'Microsoft YaHei, Noto Sans CJK SC, sans-serif' },
+  { label: '粗黑标题', value: 'SimHei, Microsoft YaHei, sans-serif' },
+  { label: '宋体衬线', value: 'SimSun, Noto Serif CJK SC, serif' },
+  { label: '楷体手写', value: 'KaiTi, STKaiti, serif' },
+  { label: '代码等宽', value: 'JetBrains Mono, Consolas, monospace' },
+];
+
+function textLayerVars(props: Record<string, string | number | boolean>, baseFontSize: number): CSSProperties {
+  const titleSize = Number(props.titleFontSize ?? props.fontSize ?? baseFontSize);
+  const bodySize = Number(props.textFontSize ?? props.fontSize ?? baseFontSize);
+  const titleFont = String(props.titleFontFamily ?? fontFamilyOptions[0].value);
+  const bodyFont = String(props.textFontFamily ?? fontFamilyOptions[0].value);
+  return {
+    '--motion-font': `${baseFontSize}px`,
+    '--motion-title-font': `${titleSize}px`,
+    '--motion-body-font': `${bodySize}px`,
+    '--motion-title-weight': Number(props.titleFontWeight ?? props.fontWeight ?? 900),
+    '--motion-body-weight': Number(props.textFontWeight ?? 500),
+    '--motion-title-family': titleFont,
+    '--motion-body-family': bodyFont,
+    '--motion-title-color': String(props.titleColor ?? props.textColor ?? '#111827'),
+    '--motion-body-color': String(props.bodyColor ?? props.textColor ?? '#111827'),
+  } as CSSProperties;
 }
 
 function observeStageScale(node: HTMLElement, onScale: (scale: number) => void) {

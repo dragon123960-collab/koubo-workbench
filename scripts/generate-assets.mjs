@@ -203,6 +203,17 @@ const alias = {
   lowpad: 'scifi-tech-hum-futuristic',
 };
 
+const textLayerDefaults = {
+  titleFontSize: 20,
+  textFontSize: 20,
+  titleFontWeight: 900,
+  textFontWeight: 500,
+  titleFontFamily: 'Microsoft YaHei, Noto Sans CJK SC, sans-serif',
+  textFontFamily: 'Microsoft YaHei, Noto Sans CJK SC, sans-serif',
+  titleColor: '#111827',
+  bodyColor: '#111827',
+};
+
 function cueToAssetId(name) {
   if (!name) return 'transition-transition-soft';
   if (name.startsWith('pk:')) return name.slice(3).replaceAll(':', '-');
@@ -236,6 +247,8 @@ function defaultProps(slug, title, category) {
       background: 'transparent',
       fontSize: 20,
       fontWeight: 800,
+      ...textLayerDefaults,
+      titleFontWeight: 800,
       align: 'left',
     };
   }
@@ -257,7 +270,7 @@ function defaultProps(slug, title, category) {
   if (category === '运镜') {
     return { title, text: '静态素材也要有镜头呼吸', accent: '#0f766e', background: 'transparent', textColor: '#111827', fontSize: 20 };
   }
-  return { title, text: '一句话，一个视觉重音', accent: '#d9480f', background: 'transparent', textColor: '#111827', fontSize: 20 };
+  return { title, text: '一句话，一个视觉重音', accent: '#d9480f', background: 'transparent', textColor: '#111827', fontSize: 20, ...textLayerDefaults };
 }
 
 function sizeFor(category) {

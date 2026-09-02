@@ -10,22 +10,22 @@ const guidanceBySlug: Record<string, Guidance> = {
   'static-text-block': {
     aiUse: '每个镜头里常驻不动的标题、注释、角标或说明文字，像 PPT 里的固定文字层。',
     sentenceSignals: ['标题', '说明', '常驻', '页面标签', '不需要动'],
-    editProps: ['title', 'text', 'fontSize', 'fontWeight', 'textColor', 'background', 'align'],
+    editProps: ['title', 'text', 'titleFontSize', 'textFontSize', 'titleFontWeight', 'textFontWeight', 'titleFontFamily', 'textFontFamily', 'titleColor', 'bodyColor', 'background', 'align'],
   },
   'keyword-pop-highlight': {
     aiUse: '一句话里只有一个核心词、结论词或反差词时使用，让观众先抓住重点。',
     sentenceSignals: ['记住一句话', '不是 A 而是 B', '先', '关键', '核心'],
-    editProps: ['title', 'text', 'keyword', 'keywordColor', 'fontSize', 'accent'],
+    editProps: ['title', 'text', 'keyword', 'keywordColor', 'titleFontSize', 'textFontSize', 'titleFontWeight', 'textFontWeight', 'titleFontFamily', 'textFontFamily', 'titleColor', 'bodyColor', 'accent'],
   },
   'impact-open-title': {
     aiUse: '开头三秒钩子，用大标题建立本期主题，不适合长段解释。',
     sentenceSignals: ['开场', '别急着', '今天讲', '为什么'],
-    editProps: ['title', 'text', 'keyword', 'fontSize', 'accent'],
+    editProps: ['title', 'text', 'keyword', 'titleFontSize', 'textFontSize', 'titleFontWeight', 'textFontWeight', 'titleFontFamily', 'textFontFamily', 'titleColor', 'bodyColor', 'accent'],
   },
   'typewriter-reveal': {
     aiUse: '展示规则、命令、文件名、提示词片段或短代码，适合“写下来/输入/检查”。',
     sentenceSignals: ['命令', '文件', '规则', '提示词', '写清楚', '检查'],
-    editProps: ['title', 'text', 'fontSize', 'accent', 'background'],
+    editProps: ['title', 'text', 'titleFontSize', 'textFontSize', 'titleFontFamily', 'textFontFamily', 'titleColor', 'bodyColor', 'accent', 'background'],
   },
   'line-by-line-slide': {
     aiUse: '多条并列信息按行出现，适合列举几个例子、问题或判断。',
@@ -93,7 +93,7 @@ const categoryFallback: Record<ComponentDefinition['category'], Guidance> = {
   字幕花字: {
     aiUse: '强调短词、金句、反差句或开场标题。',
     sentenceSignals: ['关键词', '结论', '反差', '标题'],
-    editProps: ['title', 'text', 'keyword', 'fontSize', 'accent'],
+    editProps: ['title', 'text', 'keyword', 'titleFontSize', 'textFontSize', 'titleFontWeight', 'textFontWeight', 'titleFontFamily', 'textFontFamily', 'titleColor', 'bodyColor', 'accent'],
   },
   强调标注: {
     aiUse: '给已有内容做圈注、划线、箭头、局部放大。',

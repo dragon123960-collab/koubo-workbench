@@ -13,7 +13,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -48,7 +56,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -93,7 +109,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -128,7 +152,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -171,7 +203,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -206,7 +246,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -299,7 +347,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -335,7 +391,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -378,7 +442,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -413,7 +485,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -458,7 +538,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -501,7 +589,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -544,7 +640,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -579,7 +683,15 @@ export const componentDefinitions = [
       "accent": "#d9480f",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 20
+      "fontSize": 20,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 900,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -625,6 +737,14 @@ export const componentDefinitions = [
       "background": "transparent",
       "fontSize": 20,
       "fontWeight": 800,
+      "titleFontSize": 20,
+      "textFontSize": 20,
+      "titleFontWeight": 800,
+      "textFontWeight": 500,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleColor": "#111827",
+      "bodyColor": "#111827",
       "align": "left"
     },
     "defaultTiming": {
