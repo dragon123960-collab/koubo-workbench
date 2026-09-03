@@ -19,7 +19,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:shotcraft": "node scripts/generate-shotcraft.mjs",
+    "prepare:shotcraft": "node adapters/remotion-shotcraft/prepare-shotcraft-project.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.38.0",

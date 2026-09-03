@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Koubo Workbench Cover</title>
+    <style>
+      :root {
+        --paper: #f7f1e8;
+        --ink: #2d2521;
+        --muted: #7f7068;
+        --accent: #c96752;
+        --accent-strong: #b74d3f;
+        --line: #d6cec4;
+        --white: rgba(255, 255, 255, 0.86);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: var(--paper);
+        font-family: "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", sans-serif;
+        color: var(--ink);
+      }
+
+      .cover {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, rgba(247, 241, 232, 0.2), rgba(247, 241, 232, 0.78)),
+          url("./channel-cover-bg.png") center / cover no-repeat;
+      }
+
+      .cover::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 15% 18%, rgba(201, 103, 82, 0.11), transparent 27%),
+          radial-gradient(circle at 84% 78%, rgba(45, 37, 33, 0.08), transparent 31%);
+        pointer-events: none;
+      }
+
+      .brand {
+        position: absolute;
+        left: 7%;
+        top: 6.8%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 23px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 0 5px rgba(201, 103, 82, 0.14);
+      }
+
+      .kicker {
+        color: var(--accent-strong);
+        font-size: 31px;
+        font-weight: 900;
+        letter-spacing: 0;
+        margin-bottom: 16px;
+      }
+
+      .title {
+        margin: 0;
+        font-size: 104px;
+        line-height: 1.02;
+        font-weight: 950;
+        letter-spacing: 0;
+      }
+
+      .title span {
+        color: var(--accent-strong);
+      }
+
+      .subtitle {
+        width: 690px;
+        margin-top: 32px;
+        color: #4e443e;
+        font-size: 31px;
+        line-height: 1.42;
+        font-weight: 800;
+      }
+
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        width: 710px;
+        margin-top: 32px;
+      }
+
+      .chip {
+        height: 48px;
+        padding: 0 22px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(214, 206, 196, 0.9);
+        box-shadow: 0 10px 28px rgba(45, 37, 33, 0.08);
+        color: #4f443e;
+        font-size: 21px;
+        font-weight: 900;
+      }
+
+      .visual {
+        position: absolute;
+        overflow: hidden;
+        background: var(--white);
+        border: 1px solid rgba(214, 206, 196, 0.92);
+        box-shadow: 0 28px 70px rgba(45, 37, 33, 0.18);
+      }
+
+      .visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .badge {
+        position: absolute;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 54px;
+        padding: 0 24px;
+        border-radius: 12px;
+        background: rgba(45, 37, 33, 0.9);
+        color: #fff8ef;
+        font-size: 22px;
+        font-weight: 900;
+        box-shadow: 0 18px 40px rgba(45, 37, 33, 0.16);
+      }
+
+      .rule {
+        position: absolute;
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent), rgba(201, 103, 82, 0));
+      }
+
+      .horizontal .copy {
+        position: absolute;
+        left: 7.2%;
+        top: 21.6%;
+      }
+
+      .horizontal .subtitle {
+        width: 590px;
+        font-size: 28px;
+      }
+
+      .horizontal .flow {
+        width: 590px;
+      }
+
+      .horizontal .visual-main {
+        right: 6.3%;
+        top: 19.5%;
+        width: 44%;
+        height: 44.5%;
+        border-radius: 26px;
+        transform: rotate(-1.2deg);
+      }
+
+      .horizontal .visual-small {
+        right: 12.5%;
+        bottom: 11.5%;
+        width: 31%;
+        height: 21%;
+        border-radius: 22px;
+        transform: rotate(2deg);
+      }
+
+      .horizontal .badge {
+        right: 38.5%;
+        bottom: 17.7%;
+      }
+
+      .horizontal .rule {
+        left: 7.2%;
+        bottom: 15%;
+        width: 43%;
+      }
+
+      .vertical .copy {
+        position: absolute;
+        left: 7.5%;
+        right: 7.5%;
+        top: 13.4%;
+      }
+
+      .vertical .kicker {
+        font-size: 30px;
+      }
+
+      .vertical .title {
+        font-size: 96px;
+        line-height: 1.05;
+      }
+
+      .vertical .subtitle {
+        width: 100%;
+        margin-top: 28px;
+        font-size: 30px;
+        line-height: 1.45;
+      }
+
+      .vertical .flow {
+        width: 100%;
+        margin-top: 30px;
+      }
+
+      .vertical .chip {
+        height: 50px;
+        font-size: 21px;
+      }
+
+      .vertical .visual-main {
+        left: 7.5%;
+        right: 7.5%;
+        bottom: 15.3%;
+        width: auto;
+        height: 28%;
+        border-radius: 28px;
+      }
+
+      .vertical .visual-small {
+        left: 13%;
+        bottom: 7.2%;
+        width: 49%;
+        height: 12.2%;
+        border-radius: 20px;
+      }
+
+      .vertical .badge {
+        right: 8.2%;
+        bottom: 10.8%;
+      }
+
+      .vertical .rule {
+        left: 7.5%;
+        top: 49.8%;
+        width: 58%;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="cover horizontal" id="cover">
+      <div class="brand"><span class="brand-mark"></span>AI说事 · 大树Tree</div>
+      <section class="copy">
+        <div class="kicker">给口播视频创作者的开源工具</div>
+        <h1 class="title">开源口播<br /><span>动效工作台</span></h1>
+        <div class="subtitle">先文字稿和配音，再用逐字 JSON 生成可微调的镜头、字幕、组件和 SFX。</div>
+        <div class="flow">
+          <span class="chip">文字稿</span>
+          <span class="chip">配音</span>
+          <span class="chip">逐字时间</span>
+          <span class="chip">工作台 JSON</span>
+        </div>
+      </section>
+      <div class="visual visual-main"><img src="../hyperframes/assets/evidence/stage-preview.png" alt="" /></div>
+      <div class="visual visual-small"><img src="../hyperframes/assets/evidence/readme-workflow.png" alt="" /></div>
+      <div class="badge">Koubo Workbench</div>
+      <div class="rule"></div>
+    </main>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const variant = params.get("variant") || "horizontal";
+      document.getElementById("cover").className = `cover ${variant}`;
+    </script>
+  </body>
+</html>

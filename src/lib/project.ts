@@ -1,5 +1,7 @@
-import type { ComponentDefinition, ComponentInstance, GlobalStyleSettings, MediaLayout, MediaSource, MediaTrack, Shot, ShotBackgroundStyle, SubtitleSettings, VoiceTrack, WorkbenchProject } from '../types';
+import type { ComponentDefinition, ComponentInstance, DesignThemeSettings, GlobalStyleSettings, Layer, MediaLayout, MediaSource, MediaTrack, MotionLibraryItem, Shot, ShotBackgroundStyle, SubtitleSettings, VoiceTrack, WorkbenchProject } from '../types';
 import { componentDefinitions } from '../data/generated';
+import { commonLayerTemplates, createLayerFromTemplate } from '../data/commonLayers';
+import { buildMotionLibraryItems } from '../data/motionLibrary';
 
 const nowIso = () => new Date().toISOString();
 
@@ -22,6 +24,31 @@ export const defaultVoiceTrack: VoiceTrack = {
   notes: '',
 };
 
+export const EDITABLE_COMPONENT_BACKGROUND = 'rgba(255,255,255,0.72)';
+export const defaultComponentTheme = {
+  accent: '#c96752',
+  titleColor: '#111827',
+  bodyColor: '#334155',
+  textColor: '#111827',
+  keywordColor: '#d9480f',
+  lineColor: '#c96752',
+  componentBackground: 'transparent',
+  itemBackground: 'rgba(255,255,255,0.58)',
+  itemTextColor: '#111827',
+};
+
+export const defaultDesignTheme: DesignThemeSettings = {
+  name: 'warm-editorial',
+  fontFamily: 'Inter, "Microsoft YaHei", "PingFang SC", system-ui, sans-serif',
+  accent: '#c96752',
+  secondaryAccent: '#2364aa',
+  textColor: '#111827',
+  mutedTextColor: '#475569',
+  surfaceColor: 'rgba(255,255,255,0.72)',
+  transparentSurface: false,
+  lineColor: '#c96752',
+};
+
 export const defaultSubtitleSettings: SubtitleSettings = {
   enabled: true,
   position: 'bottom',
@@ -37,6 +64,8 @@ export function defaultGlobalStyleSettings(useGlobalBackground = true): GlobalSt
   return {
     useGlobalBackground,
     backgroundStyle: { type: 'lightGrid', color: '#f7f1e8', imageUrl: '' },
+    componentTheme: { ...defaultComponentTheme },
+    theme: { ...defaultDesignTheme },
     cornerBug: {
       enabled: true,
       position: 'topLeft',
@@ -124,6 +153,18 @@ export function createDefaultProject(): WorkbenchProject {
     const def = componentDefinitions.find((item) => item.slug === slug)!;
     return createInstance(def, shots[index].id, shots[index].startSec + 0.4, 220 + index * 80, 170 + index * 70, index + 1);
   });
+  const design = defaultGlobalStyleSettings(true);
+  const layerStarters = commonLayerTemplates.slice(0, 2).map((template, index) =>
+    createLayerFromTemplate(template, {
+      shotId: shots[index].id,
+      startSec: shots[index].startSec + 0.45,
+      durationSec: Math.min(4.4, shots[index].durationSec - 0.8),
+      x: 220 + index * 160,
+      y: 210 + index * 90,
+      z: 10 + index,
+      theme: design.theme,
+    }),
+  );
 
   return {
     meta: {
@@ -136,8 +177,10 @@ export function createDefaultProject(): WorkbenchProject {
     script,
     shots,
     components: starters,
-    design: defaultGlobalStyleSettings(true),
-    voice: { ...defaultVoiceTrack, durationSec: getTotalDuration({ shots, components: starters } as WorkbenchProject) },
+    layers: layerStarters,
+    motionLibrary: buildMotionLibraryItems(),
+    design,
+    voice: { ...defaultVoiceTrack, durationSec: getTotalDuration({ shots, components: starters, layers: layerStarters, media: { sources: [], tracks: [] } } as unknown as WorkbenchProject) },
     media: { sources: [], tracks: [] },
     subtitles: { ...defaultSubtitleSettings },
     assets: { sfxRoot: '/sfx' },
@@ -148,6 +191,30 @@ export function createDefaultProject(): WorkbenchProject {
 export function normalizeProject(project: WorkbenchProject): WorkbenchProject {
   const rawShape = project.subtitles?.shape;
   const fallbackDesign = defaultGlobalStyleSettings(false);
+  const design = {
+    ...fallbackDesign,
+    ...(project.design ?? {}),
+    backgroundStyle: {
+      ...fallbackDesign.backgroundStyle,
+      ...(project.design?.backgroundStyle ?? {}),
+    },
+    cornerBug: {
+      ...fallbackDesign.cornerBug,
+      ...(project.design?.cornerBug ?? {}),
+    },
+    componentTheme: {
+      ...fallbackDesign.componentTheme,
+      ...(project.design?.componentTheme ?? {}),
+    },
+    theme: {
+      ...fallbackDesign.theme,
+      ...(project.design?.theme ?? {}),
+    },
+  };
+  const components = (project.components ?? []).map((component) => normalizeComponentProps(component, design));
+  const layers = project.layers?.length
+    ? project.layers.map((layer) => normalizeLayer(layer, design.theme))
+    : components.map((component) => componentToLayer(component, design.theme));
   return {
     ...project,
     shots: project.shots.map((shot, index) => ({
@@ -164,18 +231,10 @@ export function normalizeProject(project: WorkbenchProject): WorkbenchProject {
         chars: sentence.chars?.length ? sentence.chars : buildSentenceChars(sentence.text, start, end),
       };
     }),
-    design: {
-      ...fallbackDesign,
-      ...(project.design ?? {}),
-      backgroundStyle: {
-        ...fallbackDesign.backgroundStyle,
-        ...(project.design?.backgroundStyle ?? {}),
-      },
-      cornerBug: {
-        ...fallbackDesign.cornerBug,
-        ...(project.design?.cornerBug ?? {}),
-      },
-    },
+    components,
+    layers,
+    motionLibrary: mergeMotionLibrary(project.motionLibrary, buildMotionLibraryItems()),
+    design,
     voice: { ...defaultVoiceTrack, ...(project.voice ?? {}) },
     media: {
       sources: project.media?.sources ?? [],
@@ -195,6 +254,119 @@ export function normalizeProject(project: WorkbenchProject): WorkbenchProject {
   };
 }
 
+function normalizeComponentProps(component: ComponentInstance, design: GlobalStyleSettings): ComponentInstance {
+  const def = componentDefinitions.find((item) => item.slug === component.slug);
+  if (!def) return component;
+  return {
+    ...component,
+    props: {
+      ...component.props,
+      accent: component.props.accent ?? design.theme.accent,
+      lineColor: component.props.lineColor ?? design.theme.lineColor,
+      background: String(component.props.background ?? '').trim() === 'transparent' ? EDITABLE_COMPONENT_BACKGROUND : component.props.background,
+      fontSize: Number(component.props.fontSize ?? 40),
+    },
+  };
+}
+
+function normalizeLayer(layer: Layer, theme: DesignThemeSettings): Layer {
+  return {
+    ...layer,
+    opacity: layer.opacity ?? 1,
+    motion: layer.motion ?? 'fade-up',
+    style: {
+      color: theme.textColor,
+      background: layer.kind === 'group' ? (theme.transparentSurface ? 'transparent' : theme.surfaceColor) : undefined,
+      ...layer.style,
+    },
+    children: layer.children?.map((child) => normalizeLayer(child, theme)),
+    sfxEnabled: layer.sfxEnabled ?? Boolean(layer.sfxCues?.length),
+    sfxCues: layer.sfxCues ?? [],
+  };
+}
+
+function componentToLayer(component: ComponentInstance, theme: DesignThemeSettings): Layer {
+  const title = String(component.props.title ?? component.slug);
+  const text = String(component.props.text ?? '');
+  return {
+    id: `layer-from-${component.id}`,
+    kind: 'group',
+    name: title,
+    shotId: component.shotId,
+    startSec: component.startSec,
+    durationSec: component.durationSec,
+    x: component.x,
+    y: component.y,
+    w: component.w,
+    h: component.h,
+    z: component.z,
+    opacity: 1,
+    motion: component.slug.includes('list') || component.slug.includes('step') ? 'list-stagger' : 'fade-up',
+    style: {
+      background: String(component.props.background ?? theme.surfaceColor),
+      borderColor: 'rgba(15,23,42,0.12)',
+      radius: 8,
+      padding: 24,
+      color: String(component.props.textColor ?? theme.textColor),
+    },
+    children: [
+      {
+        id: `layer-from-${component.id}-title`,
+        kind: 'text',
+        name: '标题',
+        shotId: component.shotId,
+        startSec: component.startSec,
+        durationSec: component.durationSec,
+        x: 32,
+        y: 28,
+        w: Math.max(120, component.w - 64),
+        h: Math.min(90, Math.max(54, component.h * 0.34)),
+        z: 1,
+        opacity: 1,
+        motion: 'none',
+        style: {
+          fontSize: Number(component.props.titleFontSize ?? component.props.fontSize ?? 40),
+          fontWeight: 900,
+          color: String(component.props.titleColor ?? component.props.accent ?? theme.textColor),
+          align: 'left',
+        },
+        text: title,
+      },
+      {
+        id: `layer-from-${component.id}-text`,
+        kind: 'text',
+        name: '内容',
+        shotId: component.shotId,
+        startSec: component.startSec,
+        durationSec: component.durationSec,
+        x: 32,
+        y: Math.min(128, Math.max(92, component.h * 0.42)),
+        w: Math.max(120, component.w - 64),
+        h: Math.max(70, component.h - 150),
+        z: 2,
+        opacity: 1,
+        motion: 'none',
+        style: {
+          fontSize: Number(component.props.itemFontSize ?? component.props.bodyFontSize ?? 36),
+          fontWeight: 700,
+          color: String(component.props.bodyColor ?? component.props.textColor ?? theme.textColor),
+          align: 'left',
+        },
+        text,
+      },
+    ],
+    sfxEnabled: component.sfxEnabled,
+    sfxCues: component.sfxCues,
+  };
+}
+
+function mergeMotionLibrary(existing: MotionLibraryItem[] | undefined, generated: MotionLibraryItem[]) {
+  const byId = new Map<string, MotionLibraryItem>();
+  for (const item of generated) byId.set(item.id, item);
+  for (const item of existing ?? []) byId.set(item.id, { ...byId.get(item.id), ...item });
+  return [...byId.values()];
+}
+
 export function createInstance(
   def: ComponentDefinition,
   shotId: string,
@@ -205,6 +377,10 @@ export function createInstance(
 ): ComponentInstance {
   const id = `${def.slug}-${Math.random().toString(36).slice(2, 9)}`;
   const durationSec = Number((def.defaultTiming.enter + def.defaultTiming.hold + def.defaultTiming.exit).toFixed(2));
+  const props = {
+    ...def.defaultProps,
+    background: String(def.defaultProps.background ?? '').trim() === 'transparent' ? EDITABLE_COMPONENT_BACKGROUND : def.defaultProps.background,
+  };
   return {
     id,
     slug: def.slug,
@@ -216,7 +392,7 @@ export function createInstance(
     w: def.defaultSize.w,
     h: def.defaultSize.h,
     z,
-    props: { ...def.defaultProps },
+    props,
     enter: def.defaultTiming.enter,
     hold: def.defaultTiming.hold,
     exit: def.defaultTiming.exit,
@@ -248,6 +424,7 @@ export function splitScriptIntoProject(project: WorkbenchProject, text: string):
     })),
     shots,
     components: project.components.filter((component) => shots.some((shot) => shot.id === component.shotId)),
+    layers: (project.layers ?? []).filter((layer) => shots.some((shot) => shot.id === layer.shotId)),
     voice: { ...(project.voice ?? defaultVoiceTrack), timestampMode: 'estimated' },
   };
 }
@@ -256,7 +433,8 @@ export function getTotalDuration(project: WorkbenchProject): number {
   return Math.max(
     1,
     ...project.shots.map((shot) => shot.startSec + shot.durationSec),
-    ...project.components.map((component) => component.startSec + component.durationSec),
+    ...(project.components ?? []).map((component) => component.startSec + component.durationSec),
+    ...(project.layers ?? []).map((layer) => layer.startSec + layer.durationSec),
     ...(project.media?.tracks ?? []).map((track) => track.startSec + track.durationSec),
   );
 }
@@ -271,22 +449,104 @@ export function exportRemotionProps(project: WorkbenchProject) {
         }))
       : [],
   );
+  const layerSfxCues = (project.layers ?? []).flatMap((layer) =>
+    layer.sfxEnabled
+      ? (layer.sfxCues ?? []).map((cue) => ({
+          ...cue,
+          componentId: layer.id,
+          absoluteSec: Number((layer.startSec + cue.t).toFixed(3)),
+        }))
+      : [],
+  );
+  const components = project.components.map((component) => ({
+    ...component,
+    ...(shotcraftRendererForComponent(component) ? { renderer: shotcraftRendererForComponent(component) } : {}),
+  }));
+  const shotcraftCards = components
+    .map((component) => component.renderer)
+    .filter((renderer): renderer is NonNullable<ReturnType<typeof shotcraftRendererForComponent>> => Boolean(renderer));
 
   return {
     meta: project.meta,
     format: project.format,
     script: project.script,
     shots: project.shots,
-    components: project.components,
+    components,
+    layers: project.layers ?? [],
+    motionLibrary: project.motionLibrary ?? [],
     design: project.design,
     voice: project.voice,
     media: project.media,
     subtitles: project.subtitles,
     sfx: {
       ...project.sfx,
-      cues: sfxCues,
+      cues: [...sfxCues, ...layerSfxCues],
+    },
+    shotcraft: {
+      enabled: shotcraftCards.length > 0,
+      root: 'D:/project/video-shotcraft',
+      cards: shotcraftCards,
     },
   };
+}
+
+function shotcraftRendererForComponent(component: ComponentInstance) {
+  if (!component.slug.startsWith('shotcraft-')) return null;
+  const styles = parseShotcraftStyles(component.props.shotcraftStylesJson);
+  const styleKey = String(component.props.shotcraftStyleKey ?? styles[0]?.key ?? component.slug.replace(/^shotcraft-/, ''));
+  const selectedStyle = styles.find((style) => style.key === styleKey) ?? styles[0];
+  const demoFiles = String(component.props.shotcraftDemoFiles ?? '')
+    .split(/\n|\|/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+  return {
+    kind: 'video-shotcraft-native' as const,
+    componentId: component.id,
+    slug: component.slug,
+    cardName: String(component.props.shotcraftName ?? component.slug.replace(/^shotcraft-/, '')),
+    styleKey,
+    styleLabel: selectedStyle?.label ?? String(component.props.title ?? ''),
+    category: String(component.props.shotcraftCategory ?? ''),
+    recipePath: String(component.props.shotcraftSource ?? ''),
+    demoFiles,
+    selectedDemoFile: selectShotcraftDemoFile(demoFiles, styleKey),
+    nativeDurationFrames: Number(component.props.nativeDurationFrames ?? 0),
+    previewUrl: selectedStyle?.previewUrl ?? String(component.props.previewUrl ?? ''),
+    renderMode: String(component.props.renderMode ?? 'video-shotcraft-native'),
+    nativeStatus: String(component.props.nativeStatus ?? (demoFiles.length ? 'demo-source-ready' : 'recipe-only')),
+    editableBounds: {
+      x: component.x,
+      y: component.y,
+      w: component.w,
+      h: component.h,
+      z: component.z,
+      startSec: component.startSec,
+      durationSec: component.durationSec,
+    },
+  };
+}
+
+function parseShotcraftStyles(raw: unknown): { key: string; label: string; previewUrl: string }[] {
+  if (typeof raw !== 'string' || !raw.trim()) return [];
+  try {
+    const parsed = JSON.parse(raw) as { key?: string; label?: string; previewUrl?: string }[];
+    return Array.isArray(parsed)
+      ? parsed
+          .map((item) => ({
+            key: String(item.key ?? ''),
+            label: String(item.label ?? item.key ?? ''),
+            previewUrl: String(item.previewUrl ?? ''),
+          }))
+          .filter((item) => item.key)
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function selectShotcraftDemoFile(files: string[], styleKey: string) {
+  const normalized = styleKey.replace(/[^a-z0-9]/gi, '').toLowerCase();
+  return files.find((file) => file.replace(/[^a-z0-9]/gi, '').toLowerCase().includes(normalized)) ?? files[0] ?? '';
 }
 
 export function exportShotbook(project: WorkbenchProject): string {

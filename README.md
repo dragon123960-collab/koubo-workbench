@@ -167,6 +167,57 @@ node scripts/generate-assets.mjs
 - `remotion-props.json`：脚本、逐字时间戳、镜头、动效组件、媒体轨、字幕设置和 SFX cue。
 - `shotbook.md`：给后续制作使用的分镜草稿。
 
+## video-shotcraft 原生化
+
+工作台会读取 `D:\project\video-shotcraft\gallery\api\library.json` 生成 `shotcraft-*` 组件。左侧 `Shotcraft` 卡里的样片用于选型和参考；画布里的 HTML/CSS 预览只负责剪辑前微调位置、大小、时间和文字。最终要还原原版效果，应在 Remotion 工程里使用导出的原生渲染信息。
+
+如果 `D:\project\video-shotcraft` 更新了新的镜头卡，可以重新生成工作台索引：
+
+```bash
+npm run generate:shotcraft
+```
+
+导出的 `remotion-props.json` 中，`shotcraft-*` 组件会带 `renderer` 字段，顶层也会包含：
+
+```json
+{
+  "shotcraft": {
+    "enabled": true,
+    "root": "D:/project/video-shotcraft",
+    "cards": [
+      {
+        "componentId": "shotcraft-wall-reveal-moves-xxxx",
+        "cardName": "wall-reveal-moves",
+        "styleKey": "bento-light-up",
+        "recipePath": "D:/project/video-shotcraft/references/shots/ui-entrance/wall-reveal-moves.md",
+        "selectedDemoFile": "D:/project/video-shotcraft/demos/ui-entrance/wall-reveal-moves/BentoLightUp.tsx",
+        "nativeDurationFrames": 150
+      }
+    ]
+  }
+}
+```
+
+准备 Remotion 工程时运行：
+
+```bash
+npm run prepare:shotcraft -- C:\Users\dp177\Downloads\remotion-props.json D:\project\shortvideo\render
+```
+
+这个命令会把本片用到的 `video-shotcraft` demo 源码、`_fixtures`、`_textures`、`assets/lib` 和音频素材复制到目标 Remotion 工程，并生成：
+
+```text
+D:\project\shortvideo\render\src\shotcraft\manifest.json
+D:\project\shortvideo\render\src\shotcraft\ShotcraftRegistry.example.tsx
+D:\project\shortvideo\render\src\shotcraft\ShotcraftLayer.example.tsx
+```
+
+`manifest.json` 用来检查每个组件对应的配方卡、样式、源码文件、原生时长和画布位置。`ShotcraftRegistry.example.tsx` 是注册入口示例，`ShotcraftLayer.example.tsx` 演示如何按工作台的 `x/y/w/h/z/startSec/durationSec` 放入主合成。
+
+注意原版 demo 的时长通常是固定帧数，例如 150f。要完全还原原版速度，后续 Remotion 工程应优先按 `nativeDurationFrames` 渲染 Shotcraft clip，再决定是否按工作台片段时长做受控拉伸或裁切。不能简单把所有 demo 放进 60 秒主合成里直接跑，否则依赖 `useVideoConfig().durationInFrames` 的动效会变慢。
+
+注意：少数 `video-shotcraft` 卡只有配方卡，没有 demo TSX，导出时会标记为 `recipe-only`。这些卡不能假装原版复刻，需要后续按配方卡补 Remotion 实现。部分 demo 还会依赖 `@remotion/motion-blur`、`three`、`@react-three/fiber`、`@remotion/three`，只有选中的 demo import 到这些库时才需要安装。
+
 ## 开发说明
 
 主要目录：
@@ -178,7 +229,10 @@ src/types.ts                项目数据类型
 src/lib/project.ts          项目生成、导入、导出
 src/lib/audio.ts            Web Audio SFX 播放
 src/data/aiGuidance.ts      AI 选择组件时可读的语义说明
+src/data/shotcraft.ts       video-shotcraft 原生组件索引
+adapters/remotion-shotcraft Remotion 原生化准备脚本
 scripts/generate-assets.mjs 生成组件和 SFX 素材表
+scripts/generate-shotcraft.mjs 生成 video-shotcraft 组件索引
 scripts/voice-to-workbench-json.py 配音转逐字 JSON
 ```
 

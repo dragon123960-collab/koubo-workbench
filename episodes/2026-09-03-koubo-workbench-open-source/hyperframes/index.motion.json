@@ -1,0 +1,17 @@
+{
+  "duration": 107.715,
+  "assertions": [
+    { "kind": "appearsBy", "selector": "#hook-line-3", "bySec": 2 },
+    { "kind": "appearsBy", "selector": "#pain-title", "bySec": 8 },
+    { "kind": "appearsBy", "selector": "#workflow-shot", "bySec": 17 },
+    { "kind": "appearsBy", "selector": "#demo-video", "bySec": 31.5 },
+    { "kind": "appearsBy", "selector": "#control-title", "bySec": 49 },
+    { "kind": "appearsBy", "selector": "#render-title", "bySec": 57.5 },
+    { "kind": "appearsBy", "selector": "#library-title", "bySec": 69.5 },
+    { "kind": "appearsBy", "selector": "#final-title", "bySec": 88.5 },
+    { "kind": "staysInFrame", "selector": "#workflow-title" },
+    { "kind": "staysInFrame", "selector": "#render-title" },
+    { "kind": "staysInFrame", "selector": "#final-title" },
+    { "kind": "keepsMoving", "withinSelector": "#root", "maxStaticSec": 2 }
+  ]
+}

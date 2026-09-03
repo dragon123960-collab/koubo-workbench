@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Koubo Motion Workbench Open Source Intro</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Microsoft YaHei UI";
+        src: local("Microsoft YaHei UI");
+        font-weight: 300 900;
+      }
+
+      @font-face {
+        font-family: "Microsoft YaHei";
+        src: local("Microsoft YaHei");
+        font-weight: 300 900;
+      }
+
+      @font-face {
+        font-family: "PingFang SC";
+        src: local("PingFang SC");
+        font-weight: 300 900;
+      }
+
+      @font-face {
+        font-family: "Noto Sans CJK SC";
+        src: local("Noto Sans CJK SC");
+        font-weight: 300 900;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #111;
+        color: #2d2521;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      .paper-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background:
+          radial-gradient(circle at 22% 18%, rgba(184, 88, 70, 0.22), transparent 30%),
+          radial-gradient(circle at 78% 12%, rgba(114, 138, 123, 0.18), transparent 28%),
+          radial-gradient(circle at 72% 78%, rgba(92, 70, 56, 0.13), transparent 34%),
+          #f7f1e8;
+      }
+
+      .paper-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.23;
+        background-image:
+          linear-gradient(rgba(42, 31, 26, 0.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(42, 31, 26, 0.035) 1px, transparent 1px);
+        background-size: 80px 80px;
+      }
+
+      .global-topbar {
+        position: absolute;
+        z-index: 40;
+        left: 72px;
+        right: 72px;
+        top: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: rgba(45, 37, 33, 0.72);
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .brand-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 20px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.64);
+        border: 2px solid rgba(214, 206, 196, 0.9);
+        box-shadow: 0 14px 30px rgba(42, 31, 26, 0.08);
+      }
+
+      .brand-mark {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #b85846;
+        box-shadow: 0 0 0 7px rgba(184, 88, 70, 0.16);
+      }
+
+      .progress-track {
+        position: absolute;
+        z-index: 42;
+        left: 72px;
+        right: 72px;
+        bottom: 132px;
+        height: 6px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(42, 31, 26, 0.14);
+      }
+
+      #progress-fill {
+        width: 100%;
+        height: 100%;
+        transform-origin: left center;
+        background: #b85846;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        padding: 120px 96px 150px;
+      }
+
+      .scene-grid {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 70px;
+        height: 100%;
+        align-items: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 24px;
+        color: #b85846;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .headline {
+        margin: 0;
+        max-width: 1180px;
+        color: #2d2521;
+        font-size: 96px;
+        line-height: 1.08;
+        font-weight: 900;
+      }
+
+      .accent,
+      .headline .accent {
+        color: #b85846;
+      }
+
+      .subhead {
+        margin: 32px 0 0;
+        max-width: 900px;
+        color: rgba(45, 37, 33, 0.72);
+        font-size: 38px;
+        line-height: 1.42;
+        font-weight: 600;
+      }
+
+      .ghost-word {
+        position: absolute;
+        right: 80px;
+        bottom: 122px;
+        color: rgba(42, 31, 26, 0.055);
+        font-size: 190px;
+        line-height: 1;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .hook-seed {
+        position: absolute;
+        left: 96px;
+        top: 188px;
+        padding: 16px 26px;
+        border-radius: 999px;
+        color: #fff9f2;
+        background: #2a1f1a;
+        font-size: 34px;
+        line-height: 1;
+        font-weight: 900;
+        box-shadow: 0 18px 42px rgba(42, 31, 26, 0.16);
+      }
+
+      .caption-band {
+        position: absolute;
+        z-index: 35;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        min-height: 116px;
+        padding: 28px 110px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff9f2;
+        background: rgba(42, 31, 26, 0.92);
+        box-shadow: 0 -18px 50px rgba(42, 31, 26, 0.18);
+      }
+
+      .caption {
+        max-width: 1500px;
+        text-align: center;
+        font-size: 42px;
+        line-height: 1.25;
+        font-weight: 800;
+      }
+
+      .caption .hot {
+        color: #f2b29f;
+      }
+
+      .pain-stack {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 22px;
+        align-items: stretch;
+      }
+
+      .pain-card {
+        min-height: 310px;
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 3px solid rgba(214, 206, 196, 0.95);
+        box-shadow: 0 26px 54px rgba(42, 31, 26, 0.12);
+      }
+
+      .pain-card .num {
+        color: rgba(184, 88, 70, 0.95);
+        font-size: 34px;
+        font-weight: 900;
+      }
+
+      .pain-card .label {
+        color: #2d2521;
+        font-size: 46px;
+        line-height: 1.12;
+        font-weight: 900;
+      }
+
+      .workflow-panel,
+      .proof-panel,
+      .library-panel {
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 3px solid rgba(214, 206, 196, 0.95);
+        box-shadow: 0 32px 80px rgba(42, 31, 26, 0.15);
+        overflow: hidden;
+      }
+
+      .screenshot {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .workflow-panel {
+        height: 680px;
+      }
+
+      .workflow-steps {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+      }
+
+      .flow-step {
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        gap: 18px;
+        align-items: center;
+        min-height: 118px;
+        padding: 22px;
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.76);
+        border: 2px solid rgba(214, 206, 196, 0.92);
+      }
+
+      .flow-step .badge {
+        width: 58px;
+        height: 58px;
+        display: grid;
+        place-items: center;
+        border-radius: 22px;
+        background: #b85846;
+        color: #fff9f2;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .flow-step strong {
+        display: block;
+        color: #2d2521;
+        font-size: 31px;
+        line-height: 1.15;
+      }
+
+      .flow-step span {
+        display: block;
+        margin-top: 6px;
+        color: rgba(45, 37, 33, 0.66);
+        font-size: 22px;
+        line-height: 1.25;
+        font-weight: 700;
+      }
+
+      #demo-video {
+        position: absolute;
+        z-index: 10;
+        left: 268px;
+        top: 168px;
+        width: 1384px;
+        height: 778px;
+        object-fit: cover;
+        border-radius: 34px;
+        border: 4px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 44px 100px rgba(42, 31, 26, 0.22);
+        opacity: 0;
+      }
+
+      #scene-demo {
+        z-index: 22;
+      }
+
+      .callout-grid {
+        position: absolute;
+        z-index: 18;
+        inset: 140px 96px 150px;
+        pointer-events: none;
+      }
+
+      .callout {
+        position: absolute;
+        min-width: 210px;
+        padding: 16px 22px;
+        border-radius: 999px;
+        background: rgba(42, 31, 26, 0.86);
+        color: #fff9f2;
+        font-size: 26px;
+        line-height: 1;
+        font-weight: 900;
+        box-shadow: 0 18px 38px rgba(42, 31, 26, 0.18);
+      }
+
+      .callout.left {
+        left: 118px;
+        top: 190px;
+      }
+
+      .callout.stage {
+        left: 620px;
+        top: 40px;
+      }
+
+      .callout.inspector {
+        right: 120px;
+        top: 210px;
+      }
+
+      .callout.timeline {
+        left: 690px;
+        bottom: 64px;
+      }
+
+      .edit-list {
+        display: grid;
+        gap: 20px;
+      }
+
+      .edit-chip {
+        padding: 28px 32px;
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 2px solid rgba(214, 206, 196, 0.9);
+        color: #2d2521;
+        font-size: 34px;
+        line-height: 1.18;
+        font-weight: 900;
+      }
+
+      .edit-chip small {
+        display: block;
+        margin-top: 8px;
+        color: rgba(45, 37, 33, 0.62);
+        font-size: 22px;
+        line-height: 1.2;
+      }
+
+      .proof-panel {
+        height: 610px;
+      }
+
+      .render-equation {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+        margin-top: 38px;
+      }
+
+      .code-pill {
+        padding: 22px 28px;
+        border-radius: 24px;
+        color: #fff9f2;
+        background: #2a1f1a;
+        font-size: 32px;
+        font-weight: 900;
+      }
+
+      .eq {
+        color: #c96752;
+        font-size: 56px;
+        font-weight: 900;
+      }
+
+      .library-panel {
+        height: 640px;
+      }
+
+      .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .tag {
+        padding: 15px 22px;
+        border-radius: 999px;
+        background: rgba(184, 88, 70, 0.12);
+        border: 2px solid rgba(184, 88, 70, 0.38);
+        color: #8e4638;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .repo-card {
+        position: absolute;
+        left: 190px;
+        top: 165px;
+        width: 1540px;
+        height: 650px;
+        border-radius: 34px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.82);
+        border: 4px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 42px 110px rgba(42, 31, 26, 0.18);
+      }
+
+      .final-lockup {
+        position: absolute;
+        z-index: 20;
+        left: 0;
+        right: 0;
+        bottom: 190px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+      }
+
+      .final-title {
+        display: inline-block;
+        padding: 28px 46px;
+        border-radius: 32px;
+        background: rgba(42, 31, 26, 0.92);
+        color: #fff9f2;
+        font-size: 70px;
+        line-height: 1.08;
+        font-weight: 900;
+        box-shadow: 0 28px 74px rgba(42, 31, 26, 0.22);
+      }
+
+      .final-title span {
+        color: #f2b29f;
+      }
+
+      .split-title {
+        display: grid;
+        gap: 26px;
+      }
+
+      .mini-note {
+        position: absolute;
+        left: 108px;
+        bottom: 160px;
+        color: rgba(45, 37, 33, 0.58);
+        font-size: 24px;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="107.715"
+      data-width="1920"
+      data-height="1080"
+      data-fps="30"
+    >
+      <div class="paper-bg" data-layout-ignore></div>
+
+      <div class="global-topbar" data-layout-ignore>
+        <div class="brand-pill"><span class="brand-mark"></span><span>Koubo Motion Workbench</span></div>
+        <div>Open-source intro</div>
+      </div>
+
+      <div class="progress-track" data-layout-ignore>
+        <div id="progress-fill"></div>
+      </div>
+
+      <audio
+        id="voiceover"
+        src="assets/audio/voiceover.mp3"
+        data-start="0"
+        data-duration="107.715"
+        data-track-index="20"
+        data-volume="1"
+      ></audio>
+
+      <section id="scene-hook" class="clip" data-start="0" data-duration="6.6" data-track-index="1">
+        <div class="scene">
+          <div class="hook-seed" id="hook-seed">口播视频</div>
+          <div class="ghost-word" id="hook-ghost" data-layout-ignore>WORKBENCH</div>
+          <p class="eyebrow" id="hook-eyebrow">口播视频前期编排台</p>
+          <h1 class="headline split-title">
+            <span id="hook-line-1">最累的</span>
+            <span id="hook-line-2">不是写文案</span>
+            <span id="hook-line-3">是每句话该配什么画面</span>
+          </h1>
+          <p class="subhead" id="hook-sub">字幕、列表、动效、音效，都要和口播节奏对上。</p>
+        </div>
+        <div class="caption-band" data-layout-allow-caption-zone>
+          <div class="caption">做口播视频，最累的其实不是写文案，是<span class="hot">每一句话该配什么画面</span>。</div>
+        </div>
+      </section>
+
+      <section id="scene-pain" class="clip" data-start="6.6" data-duration="8.26" data-track-index="1">
+        <div class="scene">
+          <p class="eyebrow" id="pain-eyebrow">纯手动拖动的问题</p>
+          <h2 class="headline" id="pain-title">最后很容易变成 <span class="accent">PPT 拼图</span></h2>
+          <div class="pain-stack" style="margin-top: 72px">
+            <div class="pain-card"><div class="num">01</div><div class="label">字幕</div></div>
+            <div class="pain-card"><div class="num">02</div><div class="label">列表</div></div>
+            <div class="pain-card"><div class="num">03</div><div class="label">动效</div></div>
+            <div class="pain-card"><div class="num">04</div><div class="label">素材</div></div>
+            <div class="pain-card"><div class="num">05</div><div class="label">SFX</div></div>
+          </div>
+        </div>
+        <div class="caption-band" data-layout-allow-caption-zone>
+          <div class="caption">什么时候上字幕，什么时候出列表，什么时候给音效，<span class="hot">不能全靠手动猜</span>。</div>
+        </div>
+      </section>
+
+      <section id="scene-workflow" class="clip" data-start="14.86" data-duration="15.4" data-track-index="1">
+        <div class="scene scene-grid">
+          <div>
+            <p class="eyebrow" id="workflow-eyebrow">推荐流程</p>
+            <h2 class="headline" id="workflow-title">不是空白画布，是先生成 <span class="accent">工作台 JSON</span></h2>
+            <div class="workflow-steps" style="margin-top: 44px">
+              <div class="flow-step"><div class="badge">1</div><div><strong>文字稿</strong><span>先定每页讲什么</span></div></div>
+              <div class="flow-step"><div class="badge">2</div><div><strong>配音</strong><span>MiniMax 或真人录音</span></div></div>
+              <div class="flow-step"><div class="badge">3</div><div><strong>逐字 JSON</strong><span>Whisper 对齐时间戳</span></div></div>
+              <div class="flow-step"><div class="badge">4</div><div><strong>工作台项目</strong><span>AI 先安排组件和素材</span></div></div>
+            </div>
+          </div>
+          <div class="workflow-panel" id="workflow-shot" data-layout-allow-overflow>
+            <img class="screenshot" src="assets/evidence/readme-workflow.png" alt="README workflow screenshot" />
+          </div>
+        </div>
+        <div class="caption-band" data-layout-allow-caption-zone>
+          <div class="caption">先文字稿，再配音，再逐字时间戳，最后生成<span class="hot">可导入的工作台 JSON</span>。</div>
+        </div>
+      </section>
+
+      <video
+        id="demo-video"
+        src="assets/recordings/workbench-demo.mp4"
+        data-start="30.26"
+        data-duration="16.76"
+        data-media-start="0"
+        data-track-index="2"
+        muted
+        playsinline
+      ></video>
+
+      <section id="scene-demo" class="clip" data-start="30.26" data-duration="16.76" data-track-index="1">
+        <div class="callout-grid">
+          <div class="callout left">常用组件 / 素材 / SFX</div>
+          <div class="callout stage">真实 1920×1080 舞台</div>
+          <div class="callout inspector">图层属性</div>
+          <div class="callout timeline">脚本时间轴</div>
+        </div>
+        <div class="caption-band" data-layout-allow-caption-zone>
+          <div class="caption">AI 先安排组件、动效、素材和音效，人再进工作台微调<span class="hot">位置、字号、颜色和节奏</span>。</div>
+        </div>
+      </section>
+
+      <section id="scene-control" class="clip" data-start="47.02" data-duration="8.79" data-track-index="1">
+        <div class="scene scene-grid">
+          <div class="proof-panel" id="control-shot" data-layout-allow-overflow>
+            <img class="screenshot" src="assets/evidence/inspector-controls.png" alt="Inspector controls screenshot" />
+          </div>
+          <div>
+            <p class="eyebrow" id="control-eyebrow">人来做微调</p>
+            <h2 class="headline" id="control-title">只显示当前图层<span class="accent">真正能改</span>的设置</h2>
+            <div class="edit-list" style="margin-top: 48px">
+              <div class="edit-chip">字号和字重<small>上行、下行、列表项都能分开调</small></div>
+              <div class="edit-chip">颜色和背景<small>继承全片主题，也可以单独覆盖</small></div>
+              <div class="edit-chip">位置和节奏<small>时间轴拖到任意一秒检查画面</small></div>
+            </div>
+          </div>
+        </div>
+        <div class="caption-band" data-layout-allow-caption-zone>
+          <div class="caption">右边只显示当前图层真正能改的设置，底下时间轴能检查<span class="hot">任意一秒</span>。</div>
+        </div>
+      </section>
+
+      <section id="scene-render" class="clip" data-start="55.81" data-duration="11.61" data-track-index="1">
+        <div class="scene scene-grid">
+          <div>
+            <p class="eyebrow" id="render-eyebrow">渲染真相统一</p>
+            <h2 class="headline" id="render-title">预览里看到的，就应该是<span class="accent">最终出片</span></h2>
+            <div class="render-equation" id="render-eq">
+              <div class="code-pill">HTML</div>
+              <div class="eq">+</div>
+              <div class="code-pill">CSS</div>
+              <div class="eq">+</div>
+              <div class="code-pill">HyperFrames</div>
+            </div>
+            <p class="subhead" id="render-sub">同一套 DOM 和动效，不再靠导出后才发现换行和遮挡。</p>
+          </div>
+          <div class="proof-panel" id="render-shot" data-layout-allow-overflow>
+            <img class="screenshot" src="assets/evidence/stage-preview.png" alt="Stage preview screenshot" />
+          </div>
+        </div>
+        <div class="caption-band" data-layout-allow-caption-zone>
+          <div class="caption">工作台预览和最终渲染走同一套画面，<span class="hot">换行、遮挡、动效都应该一致</span>。</div>
+        </div>
+      </section>
+
+      <section id="scene-library" class="clip" data-start="67.42" data-duration="18.52" data-track-index="1">
+        <div class="scene scene-grid">
+          <div class="library-panel" id="library-shot" data-layout-allow-overflow>
+            <img class="screenshot" src="assets/evidence/motion-library.png" alt="Motion library screenshot" />
+          </div>
+          <div>
+            <p class="eyebrow" id="library-eyebrow">常用区精简，大库沉淀</p>
+            <h2 class="headline" id="library-title">只把高频组件放在手边</h2>
+            <div class="tag-cloud" id="library-tags">
+              <span class="tag">标题</span>
+              <span class="tag">字幕条</span>
+              <span class="tag">分层列表</span>
+              <span class="tag">步骤线</span>
+              <span class="tag">截图证据</span>
+              <span class="tag">素材画面</span>
+              <span class="tag">真人小窗</span>
+              <span class="tag">SFX</span>
+            </div>
+          </div>
+        </div>
+        <div class="caption-band" data-layout-allow-caption-zone>
+          <div class="caption">常用组件留下，不常用的进入动效库；以后看到好效果，也能<span class="hot">拆成新的原生组件</span>。</div>
+        </div>
+      </section>
+
+      <section id="scene-cta" class="clip" data-start="85.94" data-duration="22.06" data-track-index="1">
+        <div class="repo-card" id="repo-card" data-layout-allow-overflow>
+          <img class="screenshot" src="assets/evidence/repo-home.png" alt="Public repository screenshot" />
+        </div>
+        <div class="final-lockup">
+          <div class="final-title" id="final-title">准备开源：<span>拿去改，少走弯路</span></div>
+        </div>
+        <div class="mini-note" id="final-note">for AI 科普 / 工具解说 / 课程短视频</div>
+        <div class="caption-band" data-layout-allow-caption-zone>
+          <div class="caption">它更像口播视频的前期编排台。做完这一版，我们会<span class="hot">开源出来</span>。</div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+
+      tl.fromTo("#progress-fill", { scaleX: 0 }, { scaleX: 1, duration: 107.715, ease: "none" }, 0);
+
+      tl.to("#hook-seed", { y: -18, opacity: 0, duration: 0.2 }, 0.08);
+      tl.fromTo("#hook-eyebrow", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35 }, 0.05);
+      tl.fromTo("#hook-line-1", { y: 110, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.12);
+      tl.fromTo("#hook-line-2", { y: 110, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.38);
+      tl.fromTo("#hook-line-3", { y: 110, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.64);
+      tl.fromTo("#hook-sub", { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 0.56 }, 1.25);
+      tl.fromTo("#hook-ghost", { x: 80, opacity: 0 }, { x: 0, opacity: 1, duration: 0.9 }, 0.55);
+      tl.to("#hook-ghost", { x: -50, duration: 4.4, ease: "none" }, 1.55);
+
+      tl.fromTo("#pain-eyebrow", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, immediateRender: false }, 6.85);
+      tl.fromTo("#pain-title", { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, immediateRender: false }, 7.15);
+      tl.fromTo(".pain-card", { y: 95, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, duration: 0.56, stagger: 0.11, ease: "back.out(1.4)", immediateRender: false }, 8.0);
+      tl.to(".pain-card", { y: -10, duration: 2.2, ease: "sine.inOut", stagger: 0.08, yoyo: true, repeat: 1 }, 10.2);
+
+      tl.fromTo("#workflow-eyebrow", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, immediateRender: false }, 15.1);
+      tl.fromTo("#workflow-title", { x: -54, opacity: 0 }, { x: 0, opacity: 1, duration: 0.65, immediateRender: false }, 15.4);
+      tl.fromTo(".flow-step", { x: -70, opacity: 0, scale: 0.97 }, { x: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.18, immediateRender: false }, 16.2);
+      tl.fromTo("#workflow-shot", { x: 80, opacity: 0, scale: 0.94 }, { x: 0, opacity: 1, scale: 1, duration: 0.7, immediateRender: false }, 16.0);
+      tl.to("#workflow-shot img", { y: -128, duration: 11.0, ease: "none" }, 18.0);
+
+      tl.fromTo("#demo-video", { opacity: 0, scale: 1.08, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.7, immediateRender: false }, 30.36);
+      tl.fromTo(".callout", { y: 28, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.42, stagger: 0.16, ease: "back.out(1.5)", immediateRender: false }, 31.2);
+      tl.to("#demo-video", { scale: 1.04, x: -26, duration: 14.8, ease: "none" }, 31.1);
+      tl.to("#demo-video", { opacity: 0, duration: 0.45 }, 46.6);
+      tl.set("#demo-video", { opacity: 0 }, 47.02);
+
+      tl.fromTo("#control-shot", { x: -70, opacity: 0, scale: 0.94 }, { x: 0, opacity: 1, scale: 1, duration: 0.62, immediateRender: false }, 47.22);
+      tl.fromTo("#control-eyebrow", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.38, immediateRender: false }, 47.35);
+      tl.fromTo("#control-title", { x: 70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.62, immediateRender: false }, 47.65);
+      tl.fromTo(".edit-chip", { x: 86, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, stagger: 0.17, immediateRender: false }, 48.55);
+      tl.to("#control-shot img", { y: -42, duration: 5.9, ease: "none" }, 49.1);
+
+      tl.fromTo("#render-eyebrow", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, immediateRender: false }, 56.06);
+      tl.fromTo("#render-title", { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, immediateRender: false }, 56.36);
+      tl.fromTo("#render-eq .code-pill, #render-eq .eq", { y: 36, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, duration: 0.42, stagger: 0.1, immediateRender: false }, 57.35);
+      tl.fromTo("#render-sub", { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.52, immediateRender: false }, 58.2);
+      tl.fromTo("#render-shot", { x: 70, opacity: 0, scale: 0.94 }, { x: 0, opacity: 1, scale: 1, duration: 0.65, immediateRender: false }, 56.85);
+      tl.to("#render-shot img", { scale: 1.04, duration: 8.9, ease: "none" }, 58.5);
+
+      tl.fromTo("#library-shot", { x: -68, opacity: 0, scale: 0.94 }, { x: 0, opacity: 1, scale: 1, duration: 0.62, immediateRender: false }, 67.7);
+      tl.fromTo("#library-eyebrow", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, immediateRender: false }, 67.8);
+      tl.fromTo("#library-title", { x: 60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.58, immediateRender: false }, 68.2);
+      tl.fromTo("#library-tags .tag", { y: 40, opacity: 0, scale: 0.88 }, { y: 0, opacity: 1, scale: 1, duration: 0.36, stagger: 0.08, ease: "back.out(1.5)", immediateRender: false }, 69.2);
+      tl.to("#library-shot img", { y: -58, duration: 14.0, ease: "none" }, 69.1);
+
+      tl.fromTo("#repo-card", { y: 58, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.75, immediateRender: false }, 86.2);
+      tl.fromTo("#final-title", { y: 60, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.3)", immediateRender: false }, 87.4);
+      tl.fromTo("#final-note", { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, immediateRender: false }, 88.2);
+      tl.to("#repo-card img", { y: -76, duration: 18.0, ease: "none" }, 88.5);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

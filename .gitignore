@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+tmp-video-analysis/
 dist-ssr
 *.local
 
@@ -19,6 +20,14 @@ public/media/*.m4a
 public/media/*.mp4
 public/media/*.mov
 public/media/*.webm
+episodes/**/voiceover-lines/
+episodes/**/voiceover-final/
+episodes/**/hyperframes/assets/audio/
+episodes/**/hyperframes/assets/recordings/
+episodes/**/hyperframes/renders/
+episodes/**/hyperframes/snapshots/
+episodes/**/hyperframes/tmp-*/
+episodes/**/hyperframes/.thumbnails/
 
 # Vite starter assets are not used by the workbench.
 src/assets/

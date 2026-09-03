@@ -1984,7 +1984,19 @@ export const componentDefinitions = [
       "accent": "#2364aa",
       "background": "transparent",
       "textColor": "#111827",
-      "fontSize": 40
+      "fontSize": 40,
+      "items": "第一次靠记忆\n第二次靠补充\n第三次又忘了",
+      "sourceLabel": "同一个需求",
+      "sourceFontSize": 40,
+      "sourceBackground": "rgba(255,255,255,0.78)",
+      "sourceTextColor": "#111827",
+      "branchFontSize": 40,
+      "branchBackground": "rgba(255,255,255,0.74)",
+      "branchTextColor": "#111827",
+      "resultTitle": "前后不一致",
+      "resultFontSize": 40,
+      "resultBackground": "#2364aa",
+      "resultTextColor": "#ffffff"
     },
     "defaultTiming": {
       "enter": 0.45,
@@ -4057,6 +4069,294 @@ export const componentDefinitions = [
       "h": 520
     },
     "defaultSfxCues": []
+  },
+  {
+    "slug": "list-transparent-stack",
+    "title": "纯文字逐条列表",
+    "category": "数据信息图",
+    "priority": "P0",
+    "summary": "标题和条目分区显示，条目按口播逐条滑入；适合常见原因、示例和要点列表。",
+    "defaultProps": {
+      "title": "三个判断信号",
+      "items": "目标是否清楚\n边界是否清楚\n验收是否清楚",
+      "itemCueTimes": "0, 0.75, 1.5",
+      "accent": "#c96752",
+      "background": "transparent",
+      "textColor": "#111827",
+      "titleColor": "#111827",
+      "bodyColor": "#334155",
+      "itemTextColor": "#111827",
+      "itemBackground": "rgba(255,255,255,0.62)",
+      "fontSize": 40,
+      "titleFontSize": 52,
+      "itemFontSize": 42,
+      "titleFontWeight": 900,
+      "textFontWeight": 700,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleOffsetX": 0,
+      "titleOffsetY": 0,
+      "itemsOffsetX": 0,
+      "itemsOffsetY": 0
+    },
+    "defaultTiming": {
+      "enter": 0.38,
+      "hold": 3.4,
+      "exit": 0.25
+    },
+    "defaultSize": {
+      "w": 1160,
+      "h": 520
+    },
+    "defaultSfxCues": [
+      {
+        "id": "list-transparent-stack-cue-1",
+        "componentId": "",
+        "t": 0.15,
+        "assetId": "ui-pop",
+        "volume": 0.26,
+        "note": "条目 1"
+      },
+      {
+        "id": "list-transparent-stack-cue-2",
+        "componentId": "",
+        "t": 0.9,
+        "assetId": "ui-pop",
+        "volume": 0.24,
+        "rate": 1.04,
+        "note": "条目 2"
+      },
+      {
+        "id": "list-transparent-stack-cue-3",
+        "componentId": "",
+        "t": 1.65,
+        "assetId": "ui-pop",
+        "volume": 0.24,
+        "rate": 1.08,
+        "note": "条目 3"
+      }
+    ]
+  },
+  {
+    "slug": "horizontal-flow-list",
+    "title": "横向流转步骤",
+    "category": "数据信息图",
+    "priority": "P0",
+    "summary": "多个步骤从左到右依次出现，中间有流向感；适合从输入到输出的流程解释。",
+    "defaultProps": {
+      "title": "从想法到成片",
+      "items": "文字稿\n配音\n逐字稿\n工作台 JSON",
+      "itemCueTimes": "0, 0.55, 1.1, 1.65",
+      "accent": "#c96752",
+      "background": "transparent",
+      "textColor": "#111827",
+      "titleColor": "#111827",
+      "bodyColor": "#334155",
+      "itemTextColor": "#111827",
+      "itemBackground": "rgba(255,255,255,0.68)",
+      "fontSize": 40,
+      "titleFontSize": 50,
+      "itemFontSize": 36,
+      "titleFontWeight": 900,
+      "textFontWeight": 800,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleOffsetX": 0,
+      "titleOffsetY": 0,
+      "itemsOffsetX": 0,
+      "itemsOffsetY": 0
+    },
+    "defaultTiming": {
+      "enter": 0.38,
+      "hold": 3.25,
+      "exit": 0.28
+    },
+    "defaultSize": {
+      "w": 1320,
+      "h": 430
+    },
+    "defaultSfxCues": [
+      {
+        "id": "horizontal-flow-list-cue-1",
+        "componentId": "",
+        "t": 0.18,
+        "assetId": "ui-ui-select-modern",
+        "volume": 0.28,
+        "note": "步骤 1"
+      },
+      {
+        "id": "horizontal-flow-list-cue-2",
+        "componentId": "",
+        "t": 0.73,
+        "assetId": "ui-ui-select-modern",
+        "volume": 0.25,
+        "rate": 1.05,
+        "note": "步骤 2"
+      },
+      {
+        "id": "horizontal-flow-list-cue-3",
+        "componentId": "",
+        "t": 1.28,
+        "assetId": "ui-ui-select-modern",
+        "volume": 0.25,
+        "rate": 1.1,
+        "note": "步骤 3"
+      },
+      {
+        "id": "horizontal-flow-list-cue-4",
+        "componentId": "",
+        "t": 1.83,
+        "assetId": "ui-ui-success-soft",
+        "volume": 0.26,
+        "note": "步骤 4"
+      }
+    ]
+  },
+  {
+    "slug": "roadmap-line-path",
+    "title": "线路图时间轴",
+    "category": "数据信息图",
+    "priority": "P0",
+    "summary": "一条路线从起点走到终点，节点随口播点亮；适合路线、计划、流程和演化。",
+    "defaultProps": {
+      "title": "这期视频的路线图",
+      "items": "先定主题\n写说明书\n让 AI 开工\n出片检查",
+      "itemCueTimes": "0, 0.7, 1.4, 2.1",
+      "accent": "#c96752",
+      "background": "transparent",
+      "textColor": "#111827",
+      "titleColor": "#111827",
+      "bodyColor": "#334155",
+      "itemTextColor": "#111827",
+      "itemBackground": "rgba(255,255,255,0.72)",
+      "fontSize": 40,
+      "titleFontSize": 48,
+      "itemFontSize": 34,
+      "titleFontWeight": 900,
+      "textFontWeight": 800,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleOffsetX": 0,
+      "titleOffsetY": 0,
+      "itemsOffsetX": 0,
+      "itemsOffsetY": 0
+    },
+    "defaultTiming": {
+      "enter": 0.42,
+      "hold": 3.6,
+      "exit": 0.3
+    },
+    "defaultSize": {
+      "w": 1320,
+      "h": 500
+    },
+    "defaultSfxCues": [
+      {
+        "id": "roadmap-line-path-cue-1",
+        "componentId": "",
+        "t": 0.2,
+        "assetId": "light-sparkle",
+        "volume": 0.24,
+        "note": "节点 1"
+      },
+      {
+        "id": "roadmap-line-path-cue-2",
+        "componentId": "",
+        "t": 0.9,
+        "assetId": "light-sparkle",
+        "volume": 0.22,
+        "rate": 1.04,
+        "note": "节点 2"
+      },
+      {
+        "id": "roadmap-line-path-cue-3",
+        "componentId": "",
+        "t": 1.6,
+        "assetId": "light-sparkle",
+        "volume": 0.22,
+        "rate": 1.08,
+        "note": "节点 3"
+      },
+      {
+        "id": "roadmap-line-path-cue-4",
+        "componentId": "",
+        "t": 2.3,
+        "assetId": "light-sparkle",
+        "volume": 0.24,
+        "rate": 1.12,
+        "note": "节点 4"
+      }
+    ]
+  },
+  {
+    "slug": "cube-step-list",
+    "title": "立体方块列表",
+    "category": "数据信息图",
+    "priority": "P1",
+    "summary": "条目像一组有厚度的模块依次翻入，适合把三个抽象概念做成更有体积的重点。",
+    "defaultProps": {
+      "title": "三个规则盒子",
+      "items": "目标\n边界\n验收",
+      "itemCueTimes": "0, 0.7, 1.4",
+      "accent": "#c96752",
+      "background": "transparent",
+      "textColor": "#111827",
+      "titleColor": "#111827",
+      "bodyColor": "#334155",
+      "itemTextColor": "#111827",
+      "itemBackground": "rgba(255,255,255,0.76)",
+      "fontSize": 40,
+      "titleFontSize": 48,
+      "itemFontSize": 42,
+      "titleFontWeight": 900,
+      "textFontWeight": 900,
+      "titleFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "textFontFamily": "Microsoft YaHei, Noto Sans CJK SC, sans-serif",
+      "titleOffsetX": 0,
+      "titleOffsetY": 0,
+      "itemsOffsetX": 0,
+      "itemsOffsetY": 0
+    },
+    "defaultTiming": {
+      "enter": 0.42,
+      "hold": 3.2,
+      "exit": 0.28
+    },
+    "defaultSize": {
+      "w": 1160,
+      "h": 500
+    },
+    "defaultSfxCues": [
+      {
+        "id": "cube-step-list-cue-1",
+        "componentId": "",
+        "t": 0.18,
+        "assetId": "mech-mech-tech-movement",
+        "volume": 0.24,
+        "clip": 0.5,
+        "note": "方块 1"
+      },
+      {
+        "id": "cube-step-list-cue-2",
+        "componentId": "",
+        "t": 0.88,
+        "assetId": "mech-mech-tech-movement",
+        "volume": 0.22,
+        "rate": 1.04,
+        "clip": 0.5,
+        "note": "方块 2"
+      },
+      {
+        "id": "cube-step-list-cue-3",
+        "componentId": "",
+        "t": 1.58,
+        "assetId": "mech-mech-tech-movement",
+        "volume": 0.22,
+        "rate": 1.08,
+        "clip": 0.5,
+        "note": "方块 3"
+      }
+    ]
   }
 ] as ComponentDefinition[];
 

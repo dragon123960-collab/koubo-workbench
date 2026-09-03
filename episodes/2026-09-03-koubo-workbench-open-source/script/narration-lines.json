@@ -1,0 +1,132 @@
+[
+  {
+    "id": "L01",
+    "narration": "做口播视频，最累的其实不是写文案。",
+    "pauseAfter": 0.15
+  },
+  {
+    "id": "L02",
+    "narration": "是每一句话，到底该配什么画面。",
+    "pauseAfter": 0.2
+  },
+  {
+    "id": "L03",
+    "narration": "什么时候上字幕，什么时候出列表，什么时候给一个音效。",
+    "pauseAfter": 0.15
+  },
+  {
+    "id": "L04",
+    "narration": "如果全靠手动拖，最后就很容易变成 PPT 拼图。",
+    "pauseAfter": 0.25
+  },
+  {
+    "id": "L05",
+    "narration": "所以我们做了一个口播动效工作台。",
+    "pauseAfter": 0.18
+  },
+  {
+    "id": "L06",
+    "narration": "它的起点不是空白画布，而是一份已经整理好的工作台 JSON。",
+    "pauseAfter": 0.18
+  },
+  {
+    "id": "L07",
+    "narration": "前面先写文字稿，再生成配音。",
+    "pauseAfter": 0.12
+  },
+  {
+    "id": "L08",
+    "narration": "然后用 Whisper 这一类工具，把配音解析成逐字时间戳。",
+    "pauseAfter": 0.14
+  },
+  {
+    "id": "L09",
+    "narration": "AI 根据每一页的文字，先安排组件、动效、素材和音效。",
+    "pauseAfter": 0.15
+  },
+  {
+    "id": "L10",
+    "narration": "人再进工作台微调位置、字号、颜色和节奏。",
+    "pauseAfter": 0.18
+  },
+  {
+    "id": "L11",
+    "narration": "左边是常用组件、素材、音效和逐字稿。",
+    "pauseAfter": 0.1
+  },
+  {
+    "id": "L12",
+    "narration": "中间是固定一九二零乘一零八零的真实画布。",
+    "pauseAfter": 0.1
+  },
+  {
+    "id": "L13",
+    "narration": "右边只显示当前图层真正能改的设置。",
+    "pauseAfter": 0.1
+  },
+  {
+    "id": "L14",
+    "narration": "底下的时间轴，可以拖到任意一秒，检查这一秒到底会出现什么。",
+    "pauseAfter": 0.22
+  },
+  {
+    "id": "L15",
+    "narration": "现在我们还在把它改成 HTML 和 HyperFrames 的渲染方式。",
+    "pauseAfter": 0.16
+  },
+  {
+    "id": "L16",
+    "narration": "也就是说，你在工作台看到的换行、遮挡和动效，应该就是最终出片的样子。",
+    "pauseAfter": 0.2
+  },
+  {
+    "id": "L17",
+    "narration": "常用的东西，我们只保留少数几个。",
+    "pauseAfter": 0.1
+  },
+  {
+    "id": "L18",
+    "narration": "比如标题、字幕条、分层列表、步骤线、截图证据、素材画面和真人小窗。",
+    "pauseAfter": 0.18
+  },
+  {
+    "id": "L19",
+    "narration": "不常用的动效，会放到动效库里。",
+    "pauseAfter": 0.1
+  },
+  {
+    "id": "L20",
+    "narration": "以后看到别的视频里有好用的效果，也可以拆出来，做成新的原生组件。",
+    "pauseAfter": 0.2
+  },
+  {
+    "id": "L21",
+    "narration": "这套工具不是为了替代剪辑软件。",
+    "pauseAfter": 0.12
+  },
+  {
+    "id": "L22",
+    "narration": "它更像是口播视频的前期编排台。",
+    "pauseAfter": 0.12
+  },
+  {
+    "id": "L23",
+    "narration": "先把文字、配音、逐字时间、分镜和组件关系整理清楚。",
+    "pauseAfter": 0.12
+  },
+  {
+    "id": "L24",
+    "narration": "再把结果导出给后面的渲染工程。",
+    "pauseAfter": 0.22
+  },
+  {
+    "id": "L25",
+    "narration": "做完这一版，我们会把它开源出来。",
+    "pauseAfter": 0.12
+  },
+  {
+    "id": "L26",
+    "narration": "如果你也在做 AI 科普、工具解说或者课程短视频，可以直接拿去改。",
+    "pauseAfter": 0
+  }
+]
